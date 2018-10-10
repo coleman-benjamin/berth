@@ -10,7 +10,7 @@ const bodyParser = require('body-parser');
 const fs = require("fs");
 const path = require('path');
 const config = require(__root + "/config/config");
-const exception = require(__root + "/exception/exception");
+const exceptionResponse = require(__root + "/exception/ExceptionResponse");
 
 /*
 	Express App configuration
@@ -50,28 +50,9 @@ fileNames.forEach( (fileName) => {
     }
 });
 
-// 404
-app.use((req, res) => {
-    res.status(404);
-    res.render("404", {
-        title : "Page Not Found",
-    });
-});
-
-//500
-app.use((error, req, res, next) => {
-    if (error instanceof exception.ResourceNotFoundException) {
-        res.status(404);
-        res.render("404", {
-            title : "Page Not Found",
-        });
-    } else { // catch all 500
-        res.status(500);
-        res.render("500", {
-            title : "Server Error"
-        })
-    }
-});
+// Exception responses
+app.use(exceptionResponse.notFound);
+app.use(exceptionResponse.serverError);
 
 /*
     Start server

@@ -1,8 +1,7 @@
-const exception = require(__root + "/exception/exception");
+const Exception = require(__root + "/exception/Exception");
 
 class Model {
     constructor() {
-        this.exception = exception;
         this.collection = [];
     }
 
@@ -14,7 +13,7 @@ class Model {
         field = field ? field : 'id';
         let record = this.collection.find((it) => it[field] === term);
         if (!record) {
-            throw new this.exception.ResourceNotFoundException(this.constructor.name + " by query : \"" + field + "\" = \"" + term + "\"");
+            throw new Exception.ResourceNotFoundException(this.constructor.name + " by query : \"" + field + "\" = \"" + term + "\"");
         }
         return record;
     }
