@@ -5,7 +5,7 @@
   "author": "Benjamin Coleman",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack --mode=development",
+    "dev": "webpack --mode=development --g process.env.g",
     "prod": "webpack  --mode=production --config webpack.prod.config.js",
     "test": "eslint ./src/**/**.js"
   },
