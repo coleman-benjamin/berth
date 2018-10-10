@@ -1,16 +1,14 @@
 /*
     Set module name to package a particular project.
 
-    When running, pass in module name as the first argument. e.g. webpack-cli --[n]=[name]
+    When running, pass in module name as the first argument. e.g. webpack-cli --[n]=[module_name]
 
     Example : webpack-cli --n=book
 
-    As of right now the argument name (n) does not matter. [webpack-cli --crumps=book] will still package "book".
-
-    --TODO : 'all' to package all? Worth it to test framework changes I suppose
+    As of right now the argument name (n) does not matter. [webpack-cli --xyz=book] will still package "book".
  */
 if (!process.argv[2] || process.argv[2].indexOf("=") === -1) {
-    let msg = "Error : Pass in module name, first argument. e.g. webpack-cli --[x]=[name]";
+    let msg = "Error : Pass in module name, first argument. e.g. webpack-cli --[n]=[module_name]";
     console.log(msg);
     process.exit(1);
 }
@@ -20,48 +18,31 @@ const moduleName = process.argv[2].split("=")[1];
 console.log("Module name : " + moduleName);
 
 /*
-    Begin
+    Dependencies
  */
 const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const BrowserSyncPlugin = require("browser-sync-webpack-plugin");
 const path = require('path');
-const glob = require("glob");
+
+/*
+    Config Declarations
+ */
+const entryObject = {};
+const outputPath = path.resolve(__dirname, 'dev/[module_name]'.replace("[module_name]", moduleName));
+const watch = false;
+const stats = { warnings: false };
 const devTool = 'cheap-source-map';
+const publicPath = './';
 
 /*
     Entry
 */
-const entries = glob.sync('src/**/main.js');
-
-const entryObject = entries.reduce((acc, item) => {
-    const name = item.replace('/main.js', '').replace('src', 'js');
-    acc[name] = path.resolve(__dirname, item);
-    return acc;
-}, {});
-
-// Add vendor to output
+entryObject["js/[module_name]".replace("[module_name]", moduleName)] = path.resolve(__dirname, "src/[module_name]/main.js".replace("[module_name]", moduleName));
 entryObject["js/vendor"] = ['phaser'];
 
 console.log("Entry object : " + JSON.stringify(entryObject));
 
 /*
-    HtmlWebpackPlugin
-*/
-const indexTemplate = "./src/index.template.html";
-const chunkSortMode = "auto";
-let bundleChunks = ["vendor"].push(moduleName);
-let indexPath = "../[module_name]/index.html".replace("[module_name]", moduleName);
-
-const htmlWebpackPlugin = new HtmlWebpackPlugin({
-    chunks: bundleChunks,
-    filename: indexPath,
-    template: indexTemplate,
-    chunksSortMode: chunkSortMode,
-});
-
-/*
-    Other Plugins
+    Plugins
 */
 const customPhaserPlugin = new webpack.DefinePlugin({
     __DEV__: JSON.stringify(JSON.parse(process.env.BUILD_DEV || 'true')),
@@ -69,24 +50,10 @@ const customPhaserPlugin = new webpack.DefinePlugin({
     CANVAS_RENDERER: true
 });
 
-const browserSyncPlugin = new BrowserSyncPlugin({
-        host: process.env.IP || 'localhost',
-        port: process.env.PORT || 3000,
-        server: {
-            baseDir: ['./', './dev']
-        }
-    }, {
-        reload: false
-    }
-);
-
 /*
-    Add modules to configure their output
+    Export webpack configuration
  */
-let outputPath = path.resolve(__dirname, 'dev/[module_name]'.replace("[module_name]", moduleName));
-let publicPath = './';
-
-let webpackConfig = {
+module.exports = {
     entry: entryObject,
     output: {
         pathinfo: true,
@@ -96,14 +63,10 @@ let webpackConfig = {
         libraryTarget: 'umd',
         filename: '[name].js'
     },
-
-    // watch: true,
+    watch: watch,
+    stats: stats,
     devtool: devTool,
-    plugins: [
-        htmlWebpackPlugin,
-        customPhaserPlugin,
-        // browserSyncPlugin
-    ],
+    plugins: [ customPhaserPlugin ],
     module: {
         rules: [
             { test: /\.js$/, use: ['babel-loader'], include: path.join(__dirname, 'src') },
@@ -112,5 +75,3 @@ let webpackConfig = {
         ]
     }
 };
-
-module.exports = webpackConfig;
