@@ -2,12 +2,21 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const BrowserSyncPlugin = require("browser-sync-webpack-plugin");
+const glob = require("glob");
+
+const vendor = ['phaser'];
+const entries = glob.sync('src/**/main.js');
+
+const entryObject = entries.reduce((acc, item) => {
+    const name = item.replace('/main.js', '');
+    acc[name] = path.resolve(__dirname, item);
+    acc['vendor'] = vendor;
+    console.log(acc);
+    return acc;
+}, {});
 
 module.exports = {
-    entry: {
-        book: path.resolve(__dirname, 'src/book/main.js'),
-        vendor: ['phaser']
-    },
+    entry: entryObject,
     devtool: 'cheap-source-map',
     output: {
         pathinfo: true,
@@ -27,8 +36,8 @@ module.exports = {
 
         new HtmlWebpackPlugin({
             filename: '../index.html',
-            template: './src/index.html',
-            chunks: ['vendor', 'book'],
+            template: './src/index.template.html',
+            chunks: Object.keys(entryObject),
             chunksSortMode: 'manual',
             minify: {
                 removeAttributeQuotes: false,
@@ -48,6 +57,8 @@ module.exports = {
             server: {
                 baseDir: ['./', './dev']
             }
+        }, {
+            reload: false
         })
     ],
     module: {

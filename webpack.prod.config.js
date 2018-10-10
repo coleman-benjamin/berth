@@ -25,7 +25,7 @@ module.exports = {
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     new HtmlWebpackPlugin({
       filename: 'index.html',
-      template: './src/index.html',
+      template: './src/index.template.html',
       chunks: ['vendor', 'test'],
       chunksSortMode: 'manual',
       minify: {

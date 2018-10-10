@@ -1,7 +1,9 @@
 import * as Phaser from 'phaser';
-import Boot from './scene/Boot';
+import BootScene from './scene/BootScene';
+import TitleScene from './scene/TitleScene';
+import GameScene from './scene/GameScene';
 
-let initWidth = $('#content').width();
+let initWidth = document.getElementById('frame').width;
 let initHeight = initWidth / 2;
 
 const config = {
@@ -13,7 +15,9 @@ const config = {
     height: initHeight,
     backgroundColor : '#22292f',
     scene: [
-        Boot
+        BootScene,
+        TitleScene,
+        GameScene
     ]
 };
 

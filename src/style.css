@@ -1,0 +1,26 @@
+body {
+    background-color: #22292f;
+}
+
+a, p, h1, h2, h3, h4, h5, pre {
+    font-family: "Lucida Console", Monaco, monospace;
+    color: #aaaaaa;
+    letter-spacing: 2px;
+}
+
+#frame {
+    width: 100%;
+    position: relative;
+    border: 4px solid #aaaaaa;
+    border-radius: 100px 100px 0px 0px;
+    padding-top: 86px;
+}
+
+#frame p {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+#content {
+    border: 4px solid #aaaaaa;
+}
