@@ -1,6 +1,5 @@
 node_modules/
-dist/
-build/
-dev/
+public/build/
+public/dev/
 .idea
 *.iml

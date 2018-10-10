@@ -15,8 +15,6 @@ if (!process.argv[2] || process.argv[2].indexOf("=") === -1) {
 
 const moduleName = process.argv[2].split("=")[1];
 
-console.log("Module name : " + moduleName);
-
 /*
     Dependencies
  */
@@ -27,7 +25,7 @@ const path = require('path');
     Config Declarations
  */
 const entryObject = {};
-const outputPath = path.resolve(__dirname, 'dev/[module_name]'.replace("[module_name]", moduleName));
+const outputPath = path.resolve(__dirname, 'public/dev/[module_name]'.replace("[module_name]", moduleName));
 const watch = false;
 const stats = { warnings: false };
 const devTool = 'cheap-source-map';
@@ -49,6 +47,11 @@ const customPhaserPlugin = new webpack.DefinePlugin({
     WEBGL_RENDERER: true,
     CANVAS_RENDERER: true
 });
+
+/*
+    Log info
+*/
+console.log("Module name : " + moduleName);
 
 /*
     Export webpack configuration
