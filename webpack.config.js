@@ -75,7 +75,7 @@ module.exports = {
     output: outputConfig,
     watch: watch,
     stats: stats,
-    devtool: devTool,
+    // devtool: devTool,
     plugins: pluginsArray,
     module: {
         rules: [
@@ -83,5 +83,18 @@ module.exports = {
             { test: /phaser-split\.js$/, use: ['expose-loader?Phaser'] },
             { test: [/\.vert$/, /\.frag$/], use: 'raw-loader' }
         ]
+    },
+    optimization: {
+        minimize: false,
+        splitChunks: {
+            cacheGroups: {
+                vendor: {
+                    chunks: 'all',
+                    name: 'js/vendor',
+                    test: /[\\/]node_modules[\\/]/,
+                    enforce: true
+                },
+            }
+        }
     }
 };

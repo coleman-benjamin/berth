@@ -18,7 +18,7 @@ const exceptionResponse = require(__root + "/exception/ExceptionResponse");
 
 const app = express();
 
-app.use(express.static(path.join(__dirname, '../public')));
+app.use(express.static(path.resolve(__dirname, '../public')));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({

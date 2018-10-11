@@ -37,6 +37,7 @@ const pluginsArray = [];
     Entry
 */
 entryConfig["js/[module_name]".replace("[module_name]", moduleName)] = path.resolve(__dirname, "src/[module_name]/main.js".replace("[module_name]", moduleName));
+entryConfig["js/vendor"] = ['phaser'];
 
 /*
     Output
@@ -49,7 +50,7 @@ outputConfig["filename"] = '[name].bundle.js';
     Plugins
 */
 pluginsArray.push(new webpack.DefinePlugin({
-    __DEV__: JSON.stringify(JSON.parse(process.env.BUILD_DEV || 'true')),
+    __DEV__: JSON.stringify(JSON.parse(process.env.BUILD_DEV || 'false')),
     WEBGL_RENDERER: true,
     CANVAS_RENDERER: true
 }));
@@ -90,7 +91,16 @@ module.exports = {
       { test: [/\.vert$/, /\.frag$/], use: 'raw-loader' }
     ]
   },
-  // optimization: {
-  //   minimize: true
-  // }
+    optimization: {
+        splitChunks: {
+            cacheGroups: {
+                vendor: {
+                    chunks: 'initial',
+                    name: 'js/vendor',
+                    test: 'js/vendor',
+                    enforce: true
+                },
+            }
+        }
+    }
 };
