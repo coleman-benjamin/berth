@@ -6,7 +6,8 @@ class StartScene extends Phaser.Scene {
     }
 
     preload() {
-        this.load.atlas('lines', '/media/Not-Literally/spritesheet.png', '/media/Not-Literally/spritesheet.json');
+        this.load.path = process.env.BUILD_ROOT + "/not_literally/assets/";
+        this.load.atlas('lines', 'spritesheet.png', 'spritesheet.json');
     }
 
     create() {
@@ -17,13 +18,13 @@ class StartScene extends Phaser.Scene {
             repeat: -1
         });
 
-        let fuzz = this.add.sprite(game.config.width / 2, game.config.height / 2, 'lines').play("linesAnim");
+        let fuzz = this.add.sprite(this.sys.game.config.width / 2, this.sys.game.config.height / 2, 'lines').play("linesAnim");
 
         let timeline = this.tweens.createTimeline();
 
         timeline.add({
             targets: fuzz,
-            displayHeight : game.config.height,
+            displayHeight : this.sys.game.config.height,
             ease: 'Expo.easeInOut',
             duration: 5000
         });

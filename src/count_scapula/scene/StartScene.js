@@ -1,5 +1,5 @@
 import * as Phaser from 'phaser';
-import * as Scapula from '../gameobject/Scapula';
+import Scapula from '../gameobject/Scapula';
 
 class StartScene extends Phaser.Scene {
     constructor() {

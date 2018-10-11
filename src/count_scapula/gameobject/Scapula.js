@@ -39,7 +39,7 @@ class Scapula {
         /*
             Create Curve game object
          */
-        let curveWidth = initWidth * 0.054;
+        let curveWidth = this.scene.sys.game.config.width * 0.054;
         let secondWidth = curveWidth / 3;
         let thirdWidth = curveWidth - secondWidth;
 
