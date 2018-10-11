@@ -1,50 +1,88 @@
+/*
+    Set module name to package a particular project.
+
+    When running, pass in module name as the first argument. e.g. webpack-cli --[n]=[module_name]
+
+    Example : webpack-cli --n=book
+
+    As of right now the argument name (n) does not matter. [webpack-cli --xyz=book] will still package "book".
+ */
+if (!process.argv[2] || process.argv[2].indexOf("=") === -1) {
+    let msg = "Error : Pass in module name, first argument. e.g. webpack-cli --[n]=[module_name]";
+    console.log(msg);
+    process.exit(1);
+}
+
+const moduleName = process.argv[2].split("=")[1];
+
+/*
+    Dependencies
+ */
 const path = require('path');
+const fs = require('fs');
 const webpack = require('webpack');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-module.exports = {
-  entry: {
-    test: [
-      path.resolve(__dirname, 'src/test/main.js')
-    ]
-  },
-  output: {
-    path: path.resolve(__dirname, 'build/name'),
-    publicPath: './',
-    filename: 'js/bundle.js'
-  },
-  plugins: [
-      new webpack.DefinePlugin({
-          __DEV__: JSON.stringify(JSON.parse(process.env.BUILD_DEV || 'false')),
-          WEBGL_RENDERER: true,
-          CANVAS_RENDERER: true
-      }),
-    new CleanWebpackPlugin(['build']),
-    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-    new HtmlWebpackPlugin({
-      filename: 'index.html',
-      template: './src/index.template.html',
-      chunks: ['vendor', 'test'],
-      chunksSortMode: 'manual',
-      minify: {
-        removeAttributeQuotes: true,
-        collapseWhitespace: true,
-        html5: true,
-        minifyCSS: true,
-        minifyJS: true,
-        minifyURLs: true,
-        removeComments: true,
-        removeEmptyAttributes: true
-      },
-      hash: true
-    }),
-    new CopyWebpackPlugin([
-      { from: 'assets', to: 'assets' }
-    ]),
+/*
+    Config Declarations
+ */
+const entryConfig = {};
+const outputConfig = {};
+const outputPath = path.resolve(__dirname, 'public/build/[module_name]'.replace("[module_name]", moduleName));
+const stats = { warnings: false };
+const publicPath = './';
+const pluginsArray = [];
 
-  ],
+/*
+    Entry
+*/
+entryConfig["js/[module_name]".replace("[module_name]", moduleName)] = path.resolve(__dirname, "src/[module_name]/main.js".replace("[module_name]", moduleName));
+
+/*
+    Output
+ */
+outputConfig["path"] = outputPath;
+outputConfig["publicPath"] = publicPath;
+outputConfig["filename"] = '[name].bundle.js';
+
+/*
+    Plugins
+*/
+pluginsArray.push(new webpack.DefinePlugin({
+    __DEV__: JSON.stringify(JSON.parse(process.env.BUILD_DEV || 'true')),
+    WEBGL_RENDERER: true,
+    CANVAS_RENDERER: true
+}));
+pluginsArray.push(new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/));
+
+// Check to see if there are assets to be copied to the build directory
+const assetsPath = "src/[module_name]/assets".replace("[module_name]", moduleName);
+try {
+    fs.statSync(assetsPath);
+    pluginsArray.push(new CopyWebpackPlugin([{
+        from: assetsPath,
+        to: 'assets'
+    }
+    ]));
+} catch(e) {}
+
+/*
+    Log info
+*/
+console.log("--------------------------");
+console.log("Module name : " + moduleName);
+console.log("Entry config : " + JSON.stringify(entryConfig, null, 2));
+console.log("Output config : " + JSON.stringify(outputConfig, null, 2));
+console.log("--------------------------");
+
+/*
+    Export webpack configuration
+ */
+module.exports = {
+  entry: entryConfig,
+  output: outputConfig,
+  plugins: pluginsArray,
+  stats: stats,
   module: {
     rules: [
       { test: /\.js$/, use: ['babel-loader'], include: path.join(__dirname, 'src') },
@@ -52,7 +90,7 @@ module.exports = {
       { test: [/\.vert$/, /\.frag$/], use: 'raw-loader' }
     ]
   },
-  optimization: {
-    minimize: true
-  }
+  // optimization: {
+  //   minimize: true
+  // }
 };

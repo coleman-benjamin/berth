@@ -24,52 +24,59 @@ const path = require('path');
 /*
     Config Declarations
  */
-const entryObject = {};
+const entryConfig = {};
+const outputConfig = {};
 const outputPath = path.resolve(__dirname, 'public/dev/[module_name]'.replace("[module_name]", moduleName));
 const watch = false;
 const stats = { warnings: false };
 const devTool = 'cheap-source-map';
 const publicPath = './';
+const pluginsArray = [];
 
 /*
     Entry
 */
-entryObject["js/[module_name]".replace("[module_name]", moduleName)] = path.resolve(__dirname, "src/[module_name]/main.js".replace("[module_name]", moduleName));
-entryObject["js/vendor"] = ['phaser'];
+entryConfig["js/[module_name]".replace("[module_name]", moduleName)] = path.resolve(__dirname, "src/[module_name]/main.js".replace("[module_name]", moduleName));
+entryConfig["js/vendor"] = ['phaser'];
 
-console.log("Entry object : " + JSON.stringify(entryObject));
+/*
+    Output
+ */
+outputConfig["pathinfo"] = true;
+outputConfig["path"] = outputPath;
+outputConfig["publicPath"] = publicPath;
+outputConfig["library"] = '[name]';
+outputConfig["libraryTarget"] = 'umd';
+outputConfig["filename"] = '[name].js';
 
 /*
     Plugins
 */
-const customPhaserPlugin = new webpack.DefinePlugin({
+pluginsArray.push(new webpack.DefinePlugin({
     __DEV__: JSON.stringify(JSON.parse(process.env.BUILD_DEV || 'true')),
     WEBGL_RENDERER: true,
     CANVAS_RENDERER: true
-});
+}));
 
 /*
     Log info
 */
+console.log("--------------------------");
 console.log("Module name : " + moduleName);
+console.log("Entry config : " + JSON.stringify(entryConfig, null, 2));
+console.log("Output config : " + JSON.stringify(outputConfig, null, 2));
+console.log("--------------------------");
 
 /*
     Export webpack configuration
  */
 module.exports = {
-    entry: entryObject,
-    output: {
-        pathinfo: true,
-        path: outputPath,
-        publicPath: publicPath,
-        library: '[name]',
-        libraryTarget: 'umd',
-        filename: '[name].js'
-    },
+    entry: entryConfig,
+    output: outputConfig,
     watch: watch,
     stats: stats,
     devtool: devTool,
-    plugins: [ customPhaserPlugin ],
+    plugins: pluginsArray,
     module: {
         rules: [
             { test: /\.js$/, use: ['babel-loader'], include: path.join(__dirname, 'src') },
