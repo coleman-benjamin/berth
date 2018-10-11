@@ -29,7 +29,6 @@ const outputConfig = {};
 const outputPath = path.resolve(__dirname, 'public/dev/[module_name]'.replace("[module_name]", moduleName));
 const watch = false;
 const stats = { warnings: false };
-const devTool = 'cheap-source-map';
 const publicPath = './';
 const pluginsArray = [];
 
@@ -47,7 +46,7 @@ outputConfig["path"] = outputPath;
 outputConfig["publicPath"] = publicPath;
 outputConfig["library"] = '[name]';
 outputConfig["libraryTarget"] = 'umd';
-outputConfig["filename"] = '[name].js';
+outputConfig["filename"] = '[name].bundle.js';
 
 /*
     Plugins
@@ -57,6 +56,20 @@ pluginsArray.push(new webpack.DefinePlugin({
     WEBGL_RENDERER: true,
     CANVAS_RENDERER: true
 }));
+
+// Check to see if there are assets to be copied to the build directory
+const assetsPath = "src/[module_name]/assets".replace("[module_name]", moduleName);
+try {
+    fs.statSync(assetsPath);
+    pluginsArray.push(new CopyWebpackPlugin([{
+        from: assetsPath,
+        to: 'assets'
+    }
+    ]));
+
+    // When loading assets in the game, set the load path with this environment variable
+    pluginsArray.push(new webpack.DefinePlugin({'process.env.BUILD_ROOT': "'/dev'"}));
+} catch(e) {}
 
 /*
     Log info
@@ -75,7 +88,6 @@ module.exports = {
     output: outputConfig,
     watch: watch,
     stats: stats,
-    // devtool: devTool,
     plugins: pluginsArray,
     module: {
         rules: [

@@ -50,7 +50,7 @@ outputConfig["filename"] = '[name].bundle.js';
     Plugins
 */
 pluginsArray.push(new webpack.DefinePlugin({
-    __DEV__: JSON.stringify(JSON.parse(process.env.BUILD_DEV || 'false')),
+    __DEV__: JSON.stringify(JSON.parse(process.env.BUILD_DEV || 'true')),
     WEBGL_RENDERER: true,
     CANVAS_RENDERER: true
 }));
@@ -65,6 +65,9 @@ try {
         to: 'assets'
     }
     ]));
+
+    // When loading assets in the game, set the load path with this environment variable
+    pluginsArray.push(new webpack.DefinePlugin({'process.env.BUILD_ROOT': "'/build'"}));
 } catch(e) {}
 
 /*
