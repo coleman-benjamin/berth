@@ -4,23 +4,24 @@ class LineController extends require("./Controller") {
     constructor() {
         super();
         this.prefix = "/lines";
+        this.viewPath = "pages/lines/";
         this.routes = [
             { path: "/", method: this.METHOD.GET, handler: this.index },
-            { path: "/:name", method: this.METHOD.GET, handler: this.show },
+            { path: "/:title", method: this.METHOD.GET, handler: this.show },
         ];
     }
 
     index(req, res) {
-        res.render('pages/lines/index', {
+        res.render(this.viewPath + 'index', {
             title : "Lines",
             lines : Line.all()
         });
     }
 
     show(req, res) {
-        let line = Line.findBy('name', req.params.name);
-        res.render('pages/lines/single', {
-            title : line.name,
+        let line = Line.findBy('title', req.params.title);
+        res.render(this.viewPath + 'single', {
+            title : line.title,
             script : line.path
         });
     }

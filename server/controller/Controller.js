@@ -12,6 +12,7 @@ class Controller {
         });
         this.routes = [];
         this.prefix = "";
+        this.viewPath = "";
     }
 
     registerRoutes(app) {
