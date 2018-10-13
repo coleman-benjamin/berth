@@ -3,5 +3,6 @@
 {{> buttons/back href="/lines"}}
 {{> buttons/replay }}
 
-<script src="/build/handwoven/js/vendor.bundle.js"></script>
-<script src="{{ script }}"></script>
+{{# each scripts }}
+    <script src="{{ this }}"></script>
+{{/each}}

@@ -1,28 +1,34 @@
-const Line = require(__root + "/model/Line");
+const GameService = require(__root + "/service/GameService");
+const EnvironmentMiddleware = require(__root + "/middleware/EnvironmentMiddleware");
+
+const gameService = new GameService();
+const viewPath = "pages/lines/";
 
 class LineController extends require("./Controller") {
     constructor() {
         super();
         this.prefix = "/lines";
-        this.viewPath = "pages/lines/";
         this.routes = [
             { path: "/", method: this.METHOD.GET, handler: this.index },
-            { path: "/:title", method: this.METHOD.GET, handler: this.show },
+            { path: "/:id", method: this.METHOD.GET, handler: this.show },
         ];
     }
 
     index(req, res) {
-        res.render(this.viewPath + 'index', {
-            title : "Lines",
-            lines : Line.all()
-        });
+        gameService.getAll("lines", (err, lines) => {
+            res.render(viewPath + 'index', {
+                title : "Lines",
+                lines : lines
+            });
+        })
     }
 
     show(req, res) {
-        let line = Line.findBy('title', req.params.title);
-        res.render(this.viewPath + 'single', {
-            title : line.title,
-            script : line.path
+        gameService.getById(req.params.id, (err, line) => {
+            res.render(viewPath + 'single', {
+                title : line.title,
+                scripts : line.devScripts
+            });
         });
     }
 }
