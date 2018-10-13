@@ -1,4 +1,4 @@
-import * as Phaser from 'phaser';
+import Phaser from 'phaser';
 import BootScene from './scene/BootScene';
 import TitleScene from './scene/TitleScene';
 import GameScene from './scene/GameScene';

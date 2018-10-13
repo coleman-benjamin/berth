@@ -1,6 +1,6 @@
-import * as Phaser from 'phaser';
-import StartScene from './scene/StartScene';
-import EndScene from './scene/EndScene';
+import Phaser from 'phaser';
+import StartScene from './StartScene';
+import EndScene from './EndScene';
 
 let initWidth = $("#frame").width();
 let initHeight = initWidth / 2;
