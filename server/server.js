@@ -15,7 +15,6 @@ const exceptionResponse = require(__root + "/exception/ExceptionResponse");
 /*
 	Express App configuration
 */
-
 const app = express();
 
 app.use(express.static(path.resolve(__dirname, '../public')));
@@ -45,7 +44,7 @@ let controllersPath = __root + "/controller/";
 let fileNames = fs.readdirSync(controllersPath);
 fileNames.forEach( (fileName) => {
     let controller = require(controllersPath + fileName);
-    if (typeof controller === 'object') { // ignores abstract Controller
+    if (typeof controller === 'object') { // ignores abstract (uninitiated) Controller
         controller.registerRoutes(app);
     }
 });
@@ -66,7 +65,7 @@ const server = app.listen(config.server.httpPort, (err) => {
     }
 });
 
-// Shutdown node gracefully when receive SIGINT/SIGTERM signals
+// Shutdown node gracefully when receive SIGINT/SIGTERM signals (for Docker)
 exitOnSignal('SIGINT');
 exitOnSignal('SIGTERM');
 process.stdin.resume();
