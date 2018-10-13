@@ -20,12 +20,16 @@ const moduleName = process.argv[2].split("=")[1];
  */
 const webpack = require('webpack');
 const path = require('path');
+const fs = require('fs');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const SyncDataPlugin = require("./SyncDataPlugin");
 
 /*
     Config Declarations
  */
 const entryConfig = {};
 const outputConfig = {};
+const inputPath = path.resolve(__dirname, "src/[module_name]".replace("[module_name]", moduleName));
 const outputPath = path.resolve(__dirname, 'public/dev/[module_name]'.replace("[module_name]", moduleName));
 const watch = false;
 const stats = { warnings: false };
@@ -35,7 +39,7 @@ const pluginsArray = [];
 /*
     Entry
 */
-entryConfig["js/[module_name]".replace("[module_name]", moduleName)] = path.resolve(__dirname, "src/[module_name]/main.js".replace("[module_name]", moduleName));
+entryConfig["js/[module_name]".replace("[module_name]", moduleName)] = inputPath + "/main.js";
 entryConfig["js/vendor"] = ['phaser'];
 
 /*
@@ -51,16 +55,26 @@ outputConfig["filename"] = '[name].bundle.js';
 /*
     Plugins
 */
+
+// To make Phaser 3 work
 pluginsArray.push(new webpack.DefinePlugin({
     __DEV__: JSON.stringify(JSON.parse(process.env.BUILD_DEV || 'true')),
     WEBGL_RENDERER: true,
     CANVAS_RENDERER: true
 }));
 
+// Custom plugin to update data file with module information
+pluginsArray.push(new SyncDataPlugin({
+    moduleName : moduleName,
+    env : "dev",
+    dataPath : path.resolve(__dirname, "./server/data/dev.json"),
+    metaPath : path.resolve(__dirname, inputPath + "/meta.json")
+}));
+
 // Check to see if there are assets to be copied to the build directory
 const assetsPath = "src/[module_name]/assets".replace("[module_name]", moduleName);
 try {
-    fs.statSync(assetsPath);
+    fs.statSync(path.resolve(__dirname, assetsPath));
     pluginsArray.push(new CopyWebpackPlugin([{
         from: assetsPath,
         to: 'assets'
@@ -69,7 +83,9 @@ try {
 
     // When loading assets in the game, set the load path with this environment variable
     pluginsArray.push(new webpack.DefinePlugin({'process.env.BUILD_ROOT': "'/dev'"}));
-} catch(e) {}
+} catch(e) {
+    console.log(e);
+}
 
 /*
     Log info
