@@ -111,7 +111,6 @@ class SyncDataPlugin {
                 }
             }
             meta[scriptsField] = compiledScripts;
-            console.log(compiledScripts);
 
             /*
                 Assign meta to data object and write to file
