@@ -1,4 +1,14 @@
 /*
+    Dependencies
+ */
+const webpack = require('webpack');
+const argv = require('yargs').argv;
+const path = require('path');
+const fs = require('fs');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const SyncDataPlugin = require("./SyncDataPlugin");
+
+/*
     Set module name to package a particular project.
 
     When running, pass in module name as the first argument. e.g. webpack-cli --[n]=[module_name]
@@ -7,26 +17,16 @@
 
     As of right now the argument name (n) does not matter. [webpack-cli --xyz=book] will still package "book".
  */
-if (!process.argv[2] || process.argv[2].indexOf("=") === -1) {
-    let msg = "Error : Pass in module name, first argument. e.g. webpack-cli --[n]=[module_name]";
+if (!argv.game) {
+    let msg = "Error : Pass in module name, e.g. npm run dev -- --game=myGame";
     console.log(msg);
     process.exit(1);
 }
 
-const moduleName = process.argv[2].split("=")[1];
-
-/*
-    Dependencies
- */
-const webpack = require('webpack');
-const path = require('path');
-const fs = require('fs');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-const SyncDataPlugin = require("./SyncDataPlugin");
-
 /*
     Config Declarations
  */
+const moduleName = argv.game;
 const entryConfig = {};
 const outputConfig = {};
 const inputPath = path.resolve(__dirname, "src/[module_name]".replace("[module_name]", moduleName));
