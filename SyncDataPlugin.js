@@ -11,7 +11,7 @@ class SyncDataPlugin {
     /*
         Options :
             moduleName : [String],  // Module name (required)
-            env : [String],         // Compile environment (required)
+            mode : [String],        // Compile mode (required)
             dataPath : [String]     // Path to data folder (required)
             metaPath : [String]     // Path to module meta file (required)
      */
@@ -23,14 +23,16 @@ class SyncDataPlugin {
     getInvalidOptions() {
         if (!this.options)
             return "Missing options.";
-        if (!this.options.env || (this.options.env !== "dev" && this.options.env !== "prod"))
-            return "Missing or invalid option : env. Required, values should be \"dev\" or \"prod\".";
+        if (!this.options.mode || (this.options.mode !== "development" && this.options.mode !== "production"))
+            return "Missing or invalid option : mode. Required, values should be \"development\" or \"production\".";
         if (!this.options.moduleName)
             return "Missing option : moduleName";
         if (!this.options.dataPath)
             return "Missing option : dataPath";
         if (!this.options.metaPath)
             return "Missing option : metaPath";
+        if (!this.options.publicBuildDir)
+            return "Missing option : publicBuildDir";
         return null;
     }
 
@@ -76,14 +78,14 @@ class SyncDataPlugin {
             console.log("SyncDataPlugin :::: syncing...");
 
             /*
+                Scripts field name for created record
+             */
+            const scriptsField = "scripts";
+
+            /*
                 Environment config
              */
-            let publicBuildDir = "/dev/" + this.options.moduleName + "/";
-            let scriptsField = "devScripts";
-            if (this.options.env === "prod") {
-                publicBuildDir = "/build/" + this.options.moduleName + "/";
-                scriptsField = "scripts";
-            }
+            const publicBuildDir = this.options.publicBuildDir.replace("[module_name]", this.options.moduleName);
 
             /*
                 Get module meta object
