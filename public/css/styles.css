@@ -19,6 +19,13 @@ a, p, h1, h2, h3, h4, h5, pre {
 }
 
 /*
+    Fix row
+ */
+.row {
+    margin: 0;
+}
+
+/*
     404
  */
 #fourOhFour h1 {
@@ -26,12 +33,15 @@ a, p, h1, h2, h3, h4, h5, pre {
 }
 
 /*
-    404
+    500
  */
 #fiveHundad h1 {
     color : #c7254e;
 }
 
+/*
+    Frame / Content
+ */
 #frame {
     width: 100%;
     position: relative;
@@ -63,20 +73,25 @@ a, p, h1, h2, h3, h4, h5, pre {
     BUTTONS
  */
 
-.bottom-btn {
-    float: right;
-    font-family: "Lucida Console", Monaco, monospace;
-    letter-spacing: 2px;
+.red-btn {
     text-decoration: none;
     font-weight: bold;
-    margin: 20px 20px 20px 0;
-    color: #aaaaaa;
     background-color: #843534;
     border: 1px inset #aaaaaa;
 }
 
-.bottom-btn a {
+.red-btn a {
     padding: 10px 20px;
+}
+
+.top-button {
+    display: inline-block;
+    margin: 0 20px 20px 20px;
+}
+
+.bottom-btn {
+    float: right;
+    margin: 20px 20px 20px 0;
 }
 
 #btn_replay {
@@ -143,4 +158,14 @@ a, p, h1, h2, h3, h4, h5, pre {
 
 #enter:hover {
     cursor: pointer;
+}
+
+/*
+    TABLES
+ */
+.index-table {
+    margin: 20px;
+}
+.index-table td {
+    padding: 0 20px;
 }

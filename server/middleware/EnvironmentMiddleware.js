@@ -1,3 +1,5 @@
-module.exports = function(req, res, next) {
-    next();
-};
+class EnvironmentMiddleware{
+
+}
+
+module.exports = new EnvironmentMiddleware();
