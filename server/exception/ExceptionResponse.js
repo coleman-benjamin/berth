@@ -10,7 +10,8 @@ function render404(req, res) {
 function render500(error, req, res, next) {
     res.status(500);
     res.render("500", {
-        title : "Server Error"
+        title : "Server Error",
+        error : error
     })
 }
 class ExceptionResponse {

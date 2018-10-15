@@ -1,7 +1,5 @@
 const GameService = require(__root + "/service/GameService");
-const EnvironmentMiddleware = require(__root + "/middleware/EnvironmentMiddleware");
-
-const gameService = new GameService();
+const ModeMiddleware = require(__root + "/middleware/ModeMiddleware")
 const viewPath = "pages/lines/";
 
 class LineController extends require("./Controller") {
@@ -9,13 +7,13 @@ class LineController extends require("./Controller") {
         super();
         this.prefix = "/lines";
         this.routes = [
-            { path: "/", method: this.METHOD.GET, handler: this.index },
-            { path: "/:id", method: this.METHOD.GET, handler: this.show },
+            { path: "/", method: this.METHOD.GET, middleware : ModeMiddleware, handler: this.index },
+            { path: "/:id", method: this.METHOD.GET, middleware : ModeMiddleware, handler: this.show },
         ];
     }
 
     index(req, res) {
-        gameService.getAll("lines", (err, lines) => {
+        GameService.getAll("lines", (err, lines) => {
             res.render(viewPath + 'index', {
                 title : "Lines",
                 lines : lines
@@ -24,7 +22,7 @@ class LineController extends require("./Controller") {
     }
 
     show(req, res) {
-        gameService.getById(req.params.id, (err, line) => {
+        GameService.getById(req.params.id, (err, line) => {
             res.render(viewPath + 'single', {
                 title : line.title,
                 scripts : line.devScripts
