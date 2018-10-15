@@ -10,7 +10,16 @@ Special thanks to [nkholski](https://github.com/nkholski/phaser3-es6-webpack) fo
 
 The objective is to have a framework that assists in creating prototypes, in effort to learn and execute various concepts or fancies, as well build examples to draw from.
 
-There are 3 layers : **Compiler**, **Server** and **Public**.
+There are 3 components : **Packager**, **Server** and **Public**.
+
+#### Packager
+Using webpack to create bundles of code. 
+
+#### Server
+Serves up whatever's in public.
+
+#### Public
+Anything that's public.
 
 ### L'App
 
@@ -38,5 +47,5 @@ npm run build -- --game=[module_name]
 
 #### Serve
 ```
-npm run start
+npm run server
 ```
