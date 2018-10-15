@@ -29,4 +29,4 @@ class GameService {
     }
 }
 
-module.exports = GameService;
+module.exports = new GameService();
