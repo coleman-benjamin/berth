@@ -1,5 +1,5 @@
-const GameService = require(__root + "/src/service/GameService");
-const ModeMiddleware = require(__root + "/src/middleware/ModeMiddleware");
+const GameService = require(__root + "/service/GameService");
+const ModeMiddleware = require(__root + "/middleware/ModeMiddleware");
 
 const gameService = new GameService();
 const viewPath = "pages/lines/";

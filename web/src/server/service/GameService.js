@@ -1,9 +1,9 @@
-const FileSystem = require(__root + "/src/database/FileSystem");
-const Exception = require(__root + "/src/exception/Exception");
+const FileSystem = require(__root + "/database/FileSystem");
+const Exception = require(__root + "/exception/Exception");
 
 class GameService {
     constructor() {
-        this.adapter = new FileSystem(__root + "/data/");
+        this.adapter = new FileSystem(__root + "/../../data/");
     }
 
     getAllByCategory(category, mode, callback) {

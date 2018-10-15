@@ -5,10 +5,10 @@
     "author": "Benjamin Coleman",
     "main": "index.js",
     "scripts": {
-        "server": "node server/server.js",
+        "web": "node ./web/src/server/server.js",
+        "build-web": "webpack --mode=production --config ./web/webpack.config.js",
         "dev": "webpack --mode=development --config ./games/webpack.config.js",
         "build": "webpack  --mode=production --config ./games/webpack.config.js",
-        "web": "webpack --mode=production --config ./server/webpack.config.js",
         "test": "eslint ./src/**/**.js"
     },
     "license": "MIT",

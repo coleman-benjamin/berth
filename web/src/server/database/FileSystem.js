@@ -5,6 +5,7 @@ class FileSystem {
     constructor(dataDirectory) {
         this.dataDirectory = dataDirectory
     }
+
     fetchCollection(collectionName, callback) {
         fs.readFile(this.dataDirectory + collectionName + ".json", (err, file) => {
             if (err) callback(err);

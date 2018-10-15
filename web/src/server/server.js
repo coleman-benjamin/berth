@@ -11,14 +11,14 @@ const cookieParser= require("cookie-parser");
 const fs = require("fs");
 const path = require('path');
 const config = require(__root + "/config/config");
-const exceptionResponse = require(__root + "/src/exception/ExceptionResponse");
+const exceptionResponse = require(__root + "/exception/ExceptionResponse");
 
 /*
 	Express App configuration
 */
 const app = express();
 
-app.use(express.static(path.resolve(__dirname, '../public')));
+app.use(express.static(path.resolve(__dirname, '../../../public')));
 
 app.use(cookieParser());
 app.use(bodyParser.json());
@@ -42,7 +42,7 @@ app.set('views', viewDir);
 	Load the Controllers / Register Controller Routes
 */
 
-let controllersPath = __root + "/src/controller/";
+let controllersPath = __root + "/controller/";
 let fileNames = fs.readdirSync(controllersPath);
 fileNames.forEach( (fileName) => {
     let controller = require(controllersPath + fileName);
