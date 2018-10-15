@@ -2,14 +2,14 @@ module.exports = {
     watch : false,
     stats : { warnings: false },
     minimize : false,
-    outputRoot : "public/dev/",
+    outputRoot : "../public/dev/",
     buildRoot : "/dev",
     env : {
         mode : "development",
         buildDev : true
     },
     syncDataConfig : {
-        dataPath : "./server/data/dev.json",
+        dataPath : "../server/data/dev.json",
         publicBuildDir : "/dev/[module_name]/"
     }
 };

@@ -4,7 +4,7 @@ module.exports = {
     watch : false,
     stats : { warnings: false },
     minimize : true,
-    outputRoot : "public/build/",
+    outputRoot : "../public/build/",
     buildRoot : "/build",
     env : {
         mode : "production",
@@ -14,7 +14,7 @@ module.exports = {
         new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
     ],
     syncDataConfig : {
-        dataPath : "./server/data/build.json",
+        dataPath : "../server/data/build.json",
         publicBuildDir : "/build/[module_name]/"
     }
 };
