@@ -8,15 +8,19 @@
         "server": "node server/server.js",
         "dev": "webpack --mode=development --config ./games/webpack.config.js",
         "build": "webpack  --mode=production --config ./games/webpack.config.js",
+        "web": "webpack --mode=production --config ./server/webpack.config.js",
         "test": "eslint ./src/**/**.js"
     },
     "license": "MIT",
     "devDependencies": {
         "@babel/core": "^7.0.0",
+        "@babel/plugin-transform-runtime": "^7.1.0",
         "@babel/polyfill": "^7.0.0",
         "@babel/preset-env": "^7.0.0",
+        "@babel/preset-react": "^7.0.0",
+        "@babel/preset-stage-1": "^7.0.0",
         "babel-eslint": "^9.0.0",
-        "babel-loader": "^8.0.0",
+        "babel-loader": "^8.0.4",
         "browser-sync": "^2.24.7",
         "browser-sync-webpack-plugin": "^2.2.2",
         "clean-webpack-plugin": "^0.1.19",
@@ -31,11 +35,14 @@
         "webpack-cli": "^3.1.0"
     },
     "dependencies": {
+        "babel-runtime": "^6.26.0",
         "body-parser": "^1.18.3",
         "cookie-parser": "^1.4.3",
         "express": "^4.16.3",
         "express-handlebars": "^3.0.0",
         "express-session": "^1.15.6",
-        "phaser": "3.14.0"
+        "phaser": "3.14.0",
+        "react": "^16.5.2",
+        "react-dom": "^16.5.2"
     }
 }
