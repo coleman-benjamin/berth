@@ -83,7 +83,7 @@ module.exports = function(env, argv) {
         Plugin : CopyWebpackPlugin
         Used when the project has assets (will probably elaborate)
      */
-    const assetsPath = "src/" + moduleName + "/assets";
+    const assetsPath = path.resolve(__dirname, "./src/" + moduleName + "/assets");
 
     let hasAssets = false;
     try {
