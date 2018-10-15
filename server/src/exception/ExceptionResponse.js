@@ -1,14 +1,12 @@
 const Exception = require("./Exception");
 
 function render404(req, res) {
-    res.status(404);
     res.render("404", {
         title : "Page Not Found",
     });
 }
 
 function render500(error, req, res, next) {
-    res.status(500);
     res.render("500", {
         title : "Server Error",
         error : error

@@ -7,10 +7,11 @@ __root = __dirname.replace(/[\\]/g, "/");
 const express = require('express');
 const exphbs  = require('express-handlebars');
 const bodyParser = require('body-parser');
+const cookieParser= require("cookie-parser");
 const fs = require("fs");
 const path = require('path');
 const config = require(__root + "/config/config");
-const exceptionResponse = require(__root + "/exception/ExceptionResponse");
+const exceptionResponse = require(__root + "/src/exception/ExceptionResponse");
 
 /*
 	Express App configuration
@@ -19,6 +20,7 @@ const app = express();
 
 app.use(express.static(path.resolve(__dirname, '../public')));
 
+app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
@@ -40,7 +42,7 @@ app.set('views', viewDir);
 	Load the Controllers / Register Controller Routes
 */
 
-let controllersPath = __root + "/controller/";
+let controllersPath = __root + "/src/controller/";
 let fileNames = fs.readdirSync(controllersPath);
 fileNames.forEach( (fileName) => {
     let controller = require(controllersPath + fileName);
