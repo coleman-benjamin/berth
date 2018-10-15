@@ -4,11 +4,10 @@ const Exception = require(__root + "/exception/Exception");
 class GameService {
     constructor() {
         this.adapter = new FileSystem();
-        this.collection = null;
     }
 
-    getAll(category, callback) {
-        this.adapter.fetchCollection("dev", (err, records) => {
+    getAllByCategory(mode, category, callback) {
+        this.adapter.fetchCollection(this.getCollectionName(mode), (err, records) => {
             let result = [];
             Object.keys(records).forEach((key) => {
                 if (records[key].category === category) result.push(records[key]);
@@ -17,8 +16,8 @@ class GameService {
         });
     }
 
-    getById(id, callback) {
-        this.adapter.fetchCollection("dev", (err, records) => {
+    getById(mode, id, callback) {
+        this.adapter.fetchCollection(this.getCollectionName(mode), (err, records) => {
             let result = records[id];
 
             if (!result)
@@ -27,6 +26,11 @@ class GameService {
             callback(err, result);
         });
     }
+
+    getCollectionName(mode) {
+        if (!mode) return "build";
+        return mode === "dev" ? "dev" : "build";
+    }
 }
 
-module.exports = new GameService();
+module.exports = GameService;

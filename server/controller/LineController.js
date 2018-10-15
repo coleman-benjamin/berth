@@ -1,4 +1,5 @@
 const GameService = require(__root + "/service/GameService");
+const gameService = new GameService();
 const ModeMiddleware = require(__root + "/middleware/ModeMiddleware");
 const viewPath = "pages/lines/";
 
@@ -13,7 +14,8 @@ class LineController extends require("./Controller") {
     }
 
     index(req, res) {
-        GameService.getAll("lines", (err, lines) => {
+        gameService.getAllByCategory(req.query.mode, "lines", (err, lines, next) => {
+            if (err) next(err);
             res.render(viewPath + 'index', {
                 title : "Lines",
                 lines : lines
@@ -22,7 +24,8 @@ class LineController extends require("./Controller") {
     }
 
     show(req, res) {
-        GameService.getById(req.params.id, (err, line) => {
+        gameService.getById(req.query.mode, req.params.id, (err, line, next) => {
+            if (err) next(err);
             res.render(viewPath + 'single', {
                 title : line.title,
                 scripts : line.scripts

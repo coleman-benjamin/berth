@@ -2,7 +2,7 @@
 
 <ul>
     {{# each lines }}
-        <li><a href="/lines/{{ id }}">{{ title }}</a></li>
+        <li><a href="/lines/{{ id }}{{# if devMode }}?mode=build{{ else }}?mode=dev{{/ if }}">{{ title }}</a></li>
     {{/each}}
 </ul>
 
