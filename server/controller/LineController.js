@@ -1,5 +1,5 @@
 const GameService = require(__root + "/service/GameService");
-const ModeMiddleware = require(__root + "/middleware/ModeMiddleware")
+const ModeMiddleware = require(__root + "/middleware/ModeMiddleware");
 const viewPath = "pages/lines/";
 
 class LineController extends require("./Controller") {
@@ -25,7 +25,7 @@ class LineController extends require("./Controller") {
         GameService.getById(req.params.id, (err, line) => {
             res.render(viewPath + 'single', {
                 title : line.title,
-                scripts : line.devScripts
+                scripts : line.scripts
             });
         });
     }
