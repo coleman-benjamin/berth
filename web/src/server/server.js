@@ -41,19 +41,21 @@ app.set('views', viewDir);
 /*
 	Load the Controllers / Register Controller Routes
 */
+app.get("/", (req, res) => res.sendFile('index.html'));
 
-let controllersPath = __root + "/controller/";
-let fileNames = fs.readdirSync(controllersPath);
-fileNames.forEach( (fileName) => {
-    let controller = require(controllersPath + fileName);
-    if (typeof controller === 'object') { // ignores abstract (uninitiated) Controller
-        controller.registerRoutes(app);
-    }
-});
+
+// let controllersPath = __root + "/controller/";
+// let fileNames = fs.readdirSync(controllersPath);
+// fileNames.forEach( (fileName) => {
+//     let controller = require(controllersPath + fileName);
+//     if (typeof controller === 'object') { // ignores abstract (uninitiated) Controller
+//         controller.registerRoutes(app);
+//     }
+// });
 
 // Exception responses
-app.use(exceptionResponse.notFound);
-app.use(exceptionResponse.serverError);
+// app.use(exceptionResponse.notFound);
+// app.use(exceptionResponse.serverError);
 
 /*
     Start server

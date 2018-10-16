@@ -1,7 +1,7 @@
 const path = require("path");
 
 module.exports = options => {
-    const entry = path.resolve(__dirname, "./index.js");
+    const entry = path.resolve(__dirname, "./src/client/main.jsx");
     return {
         entry: entry,
         output: {
@@ -11,9 +11,7 @@ module.exports = options => {
         },
         module: {
             rules: [
-                {
-                    test: /.js$/,
-                    exclude: /node_modules/,
+                { test: /.js$/, exclude: /node_modules/,
                     use: [
                         {
                             loader: 'babel-loader',
@@ -23,6 +21,7 @@ module.exports = options => {
                         },
                     ],
                 },
+                { test: /.jsx$/, loader: 'babel-loader', exclude: /node_modules/ },
             ],
         },
     }
