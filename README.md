@@ -10,13 +10,16 @@ Special thanks to [nkholski](https://github.com/nkholski/phaser3-es6-webpack) fo
 
 The objective is to have a framework that assists in creating prototypes, in effort to learn and execute various concepts or fancies, as well build examples to draw from.
 
-There are 3 components : **Packager**, **Server** and **Public**.
+As a bonus, I've taken this project as an opportunity to explore React - good time to knock one out and get a firm grasp of React development principles.
 
-#### Packager
-Using webpack to create bundles of code. 
+There are 3 components : **Games**, **Web** and **Public**.
 
-#### Server
-Serves up whatever's in public.
+#### Games
+- For writing game prototype source code
+- Each module is packaged and sent to **Public** via webpack / babel (packaging instructions below)
+
+#### Web
+- Contains Express server and React client
 
 #### Public
 Anything that's public.
@@ -35,7 +38,7 @@ npm install
 Coming soon!
 ```
 
-#### Compile
+#### Package Game
 ##### dev
 ```
 npm run dev -- --game=[module_name]
@@ -45,7 +48,12 @@ npm run dev -- --game=[module_name]
 npm run build -- --game=[module_name]
 ```
 
+#### Package Client
+```
+npm run build-client
+```
+
 #### Serve
 ```
-npm run server
+npm run web
 ```
