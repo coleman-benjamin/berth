@@ -8,17 +8,16 @@
 </head>
 <body>
     <script>
-        function loadGame(e) {
-            e.data.scripts.forEach(function(script) {
+        function loadGame(scripts) {
+            scripts.forEach(function(script) {
                 let scriptEl = document.createElement("script");
                 scriptEl.type = "text/javascript";
                 scriptEl.src = script;
                 document.body.appendChild(scriptEl);
             });
-
         }
         window.addEventListener("message", function(e) {
-            if (e.data.scripts) loadGame(e);
+            if (e.data.scripts) loadGame(e.data.scripts);
         }, false);
     </script>
 </body>
