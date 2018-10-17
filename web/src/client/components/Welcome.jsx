@@ -1,4 +1,5 @@
 import React from "react";
+import BackButton from "./buttons/BackButton.jsx";
 
 class Welcome extends React.Component{
     render() {
@@ -19,6 +20,10 @@ class Welcome extends React.Component{
                 </div>
                 <div className="lodger" id="fourth">
                     <h1>WELCOME</h1>
+                </div>
+
+                <div>
+                    <BackButton href="/"/>
                 </div>
             </div>
         );

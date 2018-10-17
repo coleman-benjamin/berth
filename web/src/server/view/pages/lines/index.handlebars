@@ -1,9 +1,0 @@
-{{> buttons/switch_env }}
-
-<ul>
-    {{# each lines }}
-        <li><a href="/lines/{{ id }}{{# if devMode }}?mode=dev{{ else }}?mode=build{{/if }}">{{ title }}</a></li>
-    {{/each}}
-</ul>
-
-{{> buttons/back }}
