@@ -10,44 +10,34 @@ class GameView extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (this.props !== nextProps)
+        if (this.props !== nextProps) {
             this.props = nextProps;
+            this.iframe.onload = () => {
+                this.iframe.contentWindow.postMessage(this.props.game, "*");
+            };
+        }
     }
 
     componentDidMount() {
-        window.addEventListener("message", this.loadGameIntoFrame);
+        // window.addEventListener("onReplayClick", this.handleFrameTasks);
     }
     componentWillUnmount() {
-        window.removeEventListener("message", this.unloadFrame);
+        // window.removeEventListener("onReplayClick", this.handleFrameTasks);
     }
 
-    loadGameIntoFrame(e) {
-        this.ifr.onload = () => {
-            this.ifr.contentWindow.postMessage('hello', "*");
-        };
-        console.log(e);
-        // let scriptsHtml = "";
-        // this.state.line.scripts.forEach((script) => {
-        //     scriptsHtml += "<script type='text/javascript' src='" + script + "'></script>";
-        // });
-        //
-        // let frame = document.getElementById("gameFrame").contentWindow.document;
-        // frame.open();
-        // frame.write("<html><head></head><body><div id='parent' style='width: 100%; height:400px'></div>" + scriptsHtml + "</body></html>");
-        // frame.close();
-    }
-
-    unloadFrame(e) {
-        console.log(e);
+    handleFrameTasks(e) {
+        // console.log(e);
     }
 
     render() {
         return (
             <div>
                 <iframe
-                    id={this.props.game.id + "_frame"}
+                    ref={(f) => this.iframe = f }
                     sandbox="allow-scripts"
-                    ref={(f) => this.ifr = f }
+                    src='/frame.html'
+                    scrolling='no'
+                    frameBorder='0'
                 >
                 </iframe>
             </div>
