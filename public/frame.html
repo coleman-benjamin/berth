@@ -1,15 +1,12 @@
 <html>
 <head>
     <style>
-        #parent {
-            width: 100%;
-            height: 100%;
+        body {
+            margin: 0;
         }
     </style>
 </head>
 <body>
-    <div id="parent">
-    </div>
     <script>
         function loadGame(e) {
             e.data.scripts.forEach(function(script) {
@@ -17,9 +14,12 @@
                 scriptEl.type = "text/javascript";
                 scriptEl.src = script;
                 document.body.appendChild(scriptEl);
-            })
+            });
+
         }
-        window.addEventListener("message", loadGame, false);
+        window.addEventListener("message", function(e) {
+            if (e.data.scripts) loadGame(e);
+        }, false);
     </script>
 </body>
 </html>

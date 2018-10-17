@@ -12,8 +12,15 @@ class GameView extends Component {
     componentWillReceiveProps(nextProps) {
         if (this.props !== nextProps) {
             this.props = nextProps;
-            this.iframe.onload = () => {
-                this.iframe.contentWindow.postMessage(this.props.game, "*");
+
+            //Size iframe to fill the content frame
+            let contentFrame = document.querySelector("#frame");
+            this.iFrame.width = contentFrame.clientWidth;
+            this.iFrame.height = contentFrame.clientWidth / 2;
+
+            // Load game data into iFrame
+            this.iFrame.onload = () => {
+                this.iFrame.contentWindow.postMessage(this.props.game, "*");
             };
         }
     }
@@ -33,8 +40,7 @@ class GameView extends Component {
         return (
             <div>
                 <iframe
-                    ref={(f) => this.iframe = f }
-                    sandbox="allow-scripts"
+                    ref={(f) => this.iFrame = f }
                     src='/frame.html'
                     scrolling='no'
                     frameBorder='0'
