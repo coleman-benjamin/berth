@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
 import StartScene from './StartScene';
 
-let initWidth = window.getComputedStyle(document.getElementById("parent")).width;
+let initWidth = window.getComputedStyle(document.querySelector("#parent")).width;
 let initHeight = initWidth / 2;
 
 const game = new Phaser.Game({
