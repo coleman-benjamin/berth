@@ -8,7 +8,5 @@ module.exports = function(req, res, next) {
     if (req.query.mode && req.query.mode === "dev") {
         res.locals.devMode = true;
     }
-    console.log(res.locals.devMode);
-
     next();
 };

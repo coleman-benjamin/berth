@@ -13,7 +13,7 @@ ReactDOM.render(
             <Route exact path="/" component={Legend} />
             <Route exact path="/welcome" component={Welcome} />
             <Route exact path="/lines" component={LinesIndex} />
-            <Route exact path="/lines/:id" component={LinesShow} />
+            <Route path="/lines/:id" component={LinesShow} />
             <Route exact path="/about" component={About} />
         </div>
     </Router>

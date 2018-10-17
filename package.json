@@ -40,8 +40,6 @@
         "body-parser": "^1.18.3",
         "cookie-parser": "^1.4.3",
         "express": "^4.16.3",
-        "express-handlebars": "^3.0.0",
-        "express-session": "^1.15.6",
         "phaser": "3.14.0",
         "react": "^16.5.2",
         "react-dom": "^16.5.2",
