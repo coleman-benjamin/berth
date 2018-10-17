@@ -2,13 +2,12 @@ import React, { Component } from "react";
 import { Link } from 'react-router-dom';
 import BackButton from "../buttons/BackButton.jsx";
 import ApiService from "../services/ApiService";
-import axios from 'axios';
 
 const LinesList = ({lines}) => (
     lines.map(line => <li key={line.id}><Link to={`/lines/${line.id}`}>{line.title}</Link></li>)
 );
 
-class LinesIndex extends Component {
+class LinesIndexView extends Component {
     constructor() {
         super();
         this.apiService = new ApiService();
@@ -18,14 +17,7 @@ class LinesIndex extends Component {
     }
 
     componentDidMount() {
-        // axios.get("/api/lines")
-        //     .then(response =>  this.setState({lines : response.data}))
-        //     .catch(e => console.log(e));
         this.apiService.getLines(response => this.setState({lines : response.data}))
-        // this.apiService.getLines(response => {
-        //     console.log(response.lines);
-        //     this.setState({lines : response.data});
-        // });
     }
 
     render() {
@@ -43,4 +35,4 @@ class LinesIndex extends Component {
     }
 }
 
-export default LinesIndex;
+export default LinesIndexView;

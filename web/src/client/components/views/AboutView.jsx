@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import BackButton from "../buttons/BackButton.jsx";
 
-class About extends Component {
+class AboutView extends Component {
     render() {
         return (
             <div>
@@ -21,4 +21,4 @@ class About extends Component {
     }
 }
 
-export default About;
+export default AboutView;

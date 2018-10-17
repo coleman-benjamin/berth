@@ -1,7 +1,7 @@
 import React from "react";
 import BackButton from "../buttons/BackButton.jsx";
 
-class Welcome extends React.Component{
+class WelcomeView extends React.Component{
     render() {
         return (
             <div>
@@ -45,4 +45,4 @@ class Welcome extends React.Component{
     }
 }
 
-export default Welcome;
+export default WelcomeView;

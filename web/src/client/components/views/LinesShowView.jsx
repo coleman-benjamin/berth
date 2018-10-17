@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import BackButton from "../buttons/BackButton.jsx";
 import axios from 'axios';
 
-class LinesShow extends Component {
+class LinesShowView extends Component {
     constructor() {
         super();
         this.state = {
@@ -56,4 +56,4 @@ class LinesShow extends Component {
     }
 }
 
-export default LinesShow;
+export default LinesShowView;

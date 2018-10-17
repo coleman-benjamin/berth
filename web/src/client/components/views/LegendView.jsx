@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from 'react-router-dom';
 
-class Legend extends Component {
+class LegendView extends Component {
     render() {
         return (
             <div>
@@ -34,4 +34,4 @@ class Legend extends Component {
     }
 }
 
-export default Legend;
+export default LegendView;
