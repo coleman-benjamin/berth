@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import BackButton from "./buttons/BackButton.jsx";
+import BackButton from "../buttons/BackButton.jsx";
 
 class About extends Component {
     render() {
