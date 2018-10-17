@@ -19,10 +19,10 @@ There are 3 components : **Games**, **Web** and **Public**.
 - Each module is packaged and sent to **Public** via webpack / babel (packaging instructions below)
 
 #### Web
-- Contains Express server and React client
+- Contains Express server and React client source code
 
 #### Public
-Anything that's public.
+- Contains base HTML, client scripts, and all scripts / assets from packaged games
 
 ### L'App
 
