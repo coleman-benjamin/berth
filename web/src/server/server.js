@@ -5,7 +5,6 @@ __root = __dirname.replace(/[\\]/g, "/");
 
 // Imports
 const express = require('express');
-const exphbs  = require('express-handlebars');
 const bodyParser = require('body-parser');
 const cookieParser= require("cookie-parser");
 const fs = require("fs");
@@ -14,11 +13,16 @@ const config = require(__root + "/config/config");
 const exceptionResponse = require(__root + "/exception/ExceptionResponse");
 
 /*
+	Path to public serving directory
+*/
+const publicPath = path.resolve(__dirname, '../../../public');
+
+/*
 	Express App configuration
 */
 const app = express();
 
-app.use(express.static(path.resolve(__dirname, '../../../public')));
+app.use(express.static(publicPath));
 
 app.use(cookieParser());
 app.use(bodyParser.json());
@@ -27,31 +31,19 @@ app.use(bodyParser.urlencoded({
 }));
 
 /*
-    View engine setup
- */
-const viewDir = path.join(__dirname, 'view');
-const hbs = exphbs.create({
-    defaultLayout : viewDir + '/layouts/master',
-    partialsDir : viewDir + '/partials'
-});
-app.engine('handlebars', hbs.engine);
-app.set('view engine', 'handlebars');
-app.set('views', viewDir);
-
-/*
 	Load the Controllers / Register Controller Routes
 */
-app.get("/", (req, res) => res.sendFile('index.html'));
+let controllersPath = __root + "/controller/";
+let fileNames = fs.readdirSync(controllersPath);
+fileNames.forEach( (fileName) => {
+    let controller = require(controllersPath + fileName);
+    if (typeof controller === 'object') { // ignores abstract (uninitiated) Controller
+        controller.registerRoutes(app);
+    }
+});
 
-
-// let controllersPath = __root + "/controller/";
-// let fileNames = fs.readdirSync(controllersPath);
-// fileNames.forEach( (fileName) => {
-//     let controller = require(controllersPath + fileName);
-//     if (typeof controller === 'object') { // ignores abstract (uninitiated) Controller
-//         controller.registerRoutes(app);
-//     }
-// });
+// Direct all other calls to front end UI
+app.get("*", (req, res) => res.sendFile(publicPath + "/index.html"));
 
 // Exception responses
 // app.use(exceptionResponse.notFound);

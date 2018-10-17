@@ -7,7 +7,7 @@ const viewPath = "pages/lines/";
 class LineController extends require("./Controller") {
     constructor() {
         super();
-        this.prefix = "/lines";
+        this.prefix = "/api/lines";
         this.routes = [
             { path: "/", method: this.METHOD.GET, middleware : ModeMiddleware, handler: this.index },
             { path: "/:id", method: this.METHOD.GET, middleware : ModeMiddleware, handler: this.show },
@@ -17,24 +17,14 @@ class LineController extends require("./Controller") {
     index(req, res, next) {
         gameService.getAllByCategory("lines", req.query.mode, (err, lines) => {
             if (err) next(err);
-            else {
-                res.render(viewPath + 'index', {
-                    title : "Lines",
-                    lines : lines
-                });
-            }
+            else res.json(lines);
         })
     }
 
     show(req, res, next) {
         gameService.getById(req.params.id, req.query.mode, (err, line) => {
             if (err) next(err);
-            else {
-                res.render(viewPath + 'single', {
-                    title : line.title,
-                    scripts : line.scripts
-                });
-            }
+            else res.json(line);
         });
     }
 }
