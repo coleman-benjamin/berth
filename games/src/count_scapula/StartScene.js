@@ -26,12 +26,12 @@ class StartScene extends Phaser.Scene {
             new Scapula(this, width - (sideX1), sideY1, width - (sideX2), sideY2, 2)
         ];
 
-        $('#btn_replay').click(function() {
-            this.scene.restart();
-        }.bind(this));
+        // $('#btn_replay').click(function() {
+        //     this.scene.restart();
+        // }.bind(this));
 
         this.scapulaGroup[this.scapulaGroup.length - 1].emitter.on('done', () => {
-            $('#btn_replay').show();
+            // $('#btn_replay').show();
             this.scene.pause();
         }, this);
     }

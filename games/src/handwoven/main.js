@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 import StartScene from './StartScene';
 import EndScene from './EndScene';
 
-let initWidth = $("#frame").width();
+let initWidth = window.getComputedStyle(document.getElementById("parent")).width;
 let initHeight = initWidth / 2;
 
 const game = new Phaser.Game({

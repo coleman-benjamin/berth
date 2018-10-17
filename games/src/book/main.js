@@ -3,7 +3,7 @@ import BootScene from './scene/BootScene';
 import TitleScene from './scene/TitleScene';
 import GameScene from './scene/GameScene';
 
-let initWidth = $("#frame").width();
+let initWidth = window.getComputedStyle(document.getElementById("parent")).width;
 let initHeight = initWidth / 2;
 
 const game = new Phaser.Game({

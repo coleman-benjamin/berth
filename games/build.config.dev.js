@@ -9,7 +9,7 @@ module.exports = {
         buildDev : true
     },
     syncDataConfig : {
-        dataPath : "../server/data/dev.json",
+        dataPath : "../web/data/dev.json",
         publicBuildDir : "/dev/[module_name]/"
     }
 };

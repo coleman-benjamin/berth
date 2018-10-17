@@ -20,10 +20,14 @@ class StartScene extends Phaser.Scene {
         });
         this.mod = Math.floor(this.sys.game.config.height / this.numLines);
 
-        $('#btn_replay').click(function() {
-            this.scene.setVisible(false, 'sceneTwo');
-            this.scene.restart();
-        }.bind(this));
+        // document.getElementById("btn_replay").addEventListener("click", function() {
+        //     this.scene.setVisible(false, 'sceneTwo');
+        //     this.scene.restart();
+        // }.bind(this));
+
+        // $('#btn_replay').click(function() {
+        //
+        // }.bind(this));
     }
 
     update() {
