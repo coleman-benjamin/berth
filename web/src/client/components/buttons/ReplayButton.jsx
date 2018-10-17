@@ -10,7 +10,7 @@ class ReplayButton extends Component {
     }
 
     componentDidMount() {
-        document.getElementById("btn_replay").style.display = "none";
+        document.querySelector("#btn_replay").style.display = "none";
     }
 }
 
