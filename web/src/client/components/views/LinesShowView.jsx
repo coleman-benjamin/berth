@@ -20,10 +20,7 @@ class LinesShowView extends Component {
         return (
             <div>
                 <GameView game={this.state.line}/>
-
-                <div>
-                    <BackButton href="/lines"/>
-                </div>
+                <BackButton href="/lines"/>
             </div>
         );
     }

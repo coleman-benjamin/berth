@@ -170,3 +170,10 @@ a, p, h1, h2, h3, h4, h5, pre {
 .index-table td {
     padding: 0 20px;
 }
+
+/*
+    LIST
+ */
+.list {
+    padding-left: 0;
+}

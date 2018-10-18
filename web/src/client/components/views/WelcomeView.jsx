@@ -22,9 +22,7 @@ class WelcomeView extends React.Component{
                     <h1>WELCOME</h1>
                 </div>
 
-                <div>
-                    <BackButton href="/"/>
-                </div>
+                <BackButton href="/"/>
             </div>
         );
     }

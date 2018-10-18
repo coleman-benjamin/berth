@@ -38,15 +38,13 @@ class GameView extends Component {
 
     render() {
         return (
-            <div>
-                <iframe
-                    ref={(f) => this.iFrame = f }
-                    src='/frame.html'
-                    scrolling='no'
-                    frameBorder='0'
-                >
-                </iframe>
-            </div>
+            <iframe
+                ref={(f) => this.iFrame = f }
+                src='/frame.html'
+                scrolling='no'
+                frameBorder='0'
+            >
+            </iframe>
         )
     }
 }
