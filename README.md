@@ -41,11 +41,11 @@ Coming soon!
 #### Package Game
 ##### dev
 ```
-npm run dev -- --game=[module_name]
+npm run dev-game -- --game=[module_name]
 ```
 ##### build
 ```
-npm run build -- --game=[module_name]
+npm run build-game -- --game=[module_name]
 ```
 
 #### Package Client
