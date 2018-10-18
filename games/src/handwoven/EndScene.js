@@ -50,8 +50,7 @@ class EndScene extends Phaser.Scene {
                 let nextP = this.startPoints[this.lineC];
                 this.lineGroup.push(new Phaser.Geom.Line(nextP.x, nextP.y, nextP.x, nextP.y));
             } else {
-                // document.getElementById("btn_replay").style.display = "block";
-                // $('#btn_replay').show();
+                parent.postMessage("done", "*");
                 this.scene.pause();
             }
 

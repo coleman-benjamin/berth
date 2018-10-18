@@ -26,12 +26,10 @@ class StartScene extends Phaser.Scene {
             new Scapula(this, width - (sideX1), sideY1, width - (sideX2), sideY2, 2)
         ];
 
-        // $('#btn_replay').click(function() {
-        //     this.scene.restart();
-        // }.bind(this));
+        window.addEventListener("message", this.onRestart.bind(this));
 
         this.scapulaGroup[this.scapulaGroup.length - 1].emitter.on('done', () => {
-            // $('#btn_replay').show();
+            parent.postMessage("done", "*");
             this.scene.pause();
         }, this);
     }
@@ -40,6 +38,12 @@ class StartScene extends Phaser.Scene {
         this.scapulaGroup.forEach((scapula) => {
             scapula.update();
         });
+    }
+
+    onRestart(e) {
+        if (e.data === "replay") {
+            this.scene.restart();
+        }
     }
 }
 

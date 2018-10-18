@@ -20,14 +20,7 @@ class StartScene extends Phaser.Scene {
         });
         this.mod = Math.floor(this.sys.game.config.height / this.numLines);
 
-        // document.querySelector("#btn_replay").addEventListener("click", function() {
-        //     this.scene.setVisible(false, 'sceneTwo');
-        //     this.scene.restart();
-        // }.bind(this));
-
-        // $('#btn_replay').click(function() {
-        //
-        // }.bind(this));
+        window.addEventListener("message", this.onRestart.bind(this));
     }
 
     update() {
@@ -54,6 +47,13 @@ class StartScene extends Phaser.Scene {
                 endY : this.lineGroupA[0].y1,
                 firstLine : this.lineGroupB[0]
             });
+        }
+    }
+
+    onRestart(e) {
+        if (e.data === "replay") {
+            this.scene.setVisible(false, 'sceneTwo');
+            this.scene.restart();
         }
     }
 }
