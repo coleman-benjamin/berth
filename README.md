@@ -16,7 +16,7 @@ There are 3 components : **Games**, **Web** and **Public**.
 
 #### Games
 - For writing game prototype source code
-- Each module is packaged and sent to **Public** via webpack / babel (packaging instructions below)
+- Each game / prototype is packaged and sent to **Public** via webpack / babel (packaging instructions below)
 
 #### Web
 - Contains Express server and React client source code
@@ -49,6 +49,11 @@ npm run build -- --game=[module_name]
 ```
 
 #### Package Client
+##### dev
+```
+npm run dev-client
+```
+##### build
 ```
 npm run build-client
 ```

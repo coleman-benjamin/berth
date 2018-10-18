@@ -6,7 +6,8 @@
     "main": "index.js",
     "scripts": {
         "web": "node ./web/src/server/server.js",
-        "build-client": "webpack --mode=development --config ./web/webpack.config.js",
+        "dev-client": "webpack --mode=development --config ./web/webpack.config.js",
+        "build-client": "webpack --mode=production --config ./web/webpack.config.js",
         "dev": "webpack --mode=development --config ./games/webpack.config.js",
         "build": "webpack  --mode=production --config ./games/webpack.config.js",
         "test": "eslint ./src/**/**.js"
