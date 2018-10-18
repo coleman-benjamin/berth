@@ -1,16 +1,16 @@
 import React, { Component } from "react";
 
 class ReplayButton extends Component {
-    render() {
-        return (
-            <div id="btn_replay" className="red-btn bottom-btn">
-                REPLAY
-            </div>
-        );
+    constructor(props) {
+        super(props);
     }
 
-    componentDidMount() {
-        document.querySelector("#btn_replay").style.display = "none";
+    render() {
+        return (
+            <div className="red-btn bottom-btn" style={this.props.style} onClick={this.props.onClick}>
+                <a>Replay</a>
+            </div>
+        );
     }
 }
 

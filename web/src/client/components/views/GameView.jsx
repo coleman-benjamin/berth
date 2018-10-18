@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 
 class GameView extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
     }
 
     shouldComponentUpdate() {
@@ -23,17 +23,6 @@ class GameView extends Component {
                 this.iFrame.contentWindow.postMessage(this.props.game, "*");
             };
         }
-    }
-
-    componentDidMount() {
-        // window.addEventListener("onReplayClick", this.handleFrameTasks);
-    }
-    componentWillUnmount() {
-        // window.removeEventListener("onReplayClick", this.handleFrameTasks);
-    }
-
-    handleFrameTasks(e) {
-        // console.log(e);
     }
 
     render() {
