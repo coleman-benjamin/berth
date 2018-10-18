@@ -23,14 +23,14 @@ class LegendView extends Component {
 
     componentDidMount() {
         const maxHeight = 1000;
-        const legendItems = $('#legend li');
+        const legendItems = document.querySelector("#legend").getElementsByTagName("li");
 
         let currentHeight = maxHeight / legendItems.length;
-        legendItems.each(function() {
-            $(this).children('a').css('padding-top', currentHeight / 1.7 + 'px');
-            $(this).children('a').css('padding-bottom', currentHeight / 1.7 + 'px');
+        for (let x = 0; x < legendItems.length; x++) {
+            legendItems[x].firstElementChild.style.paddingTop = currentHeight / 1.7 + 'px';
+            legendItems[x].firstElementChild.style.paddingBottom = currentHeight / 1.7 + 'px';
             currentHeight /= 1.25;
-        });
+        }
     }
 }
 

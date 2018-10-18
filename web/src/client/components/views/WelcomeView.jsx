@@ -30,6 +30,8 @@ class WelcomeView extends React.Component{
     }
 
     componentDidMount() {
+        const door = document.querySelector("#door");
+        const enterBtn = document.querySelector("#enter");
         const steps = ['#first', '#second', '#third', '#fourth'];
         let counter = 2;
 
@@ -38,10 +40,11 @@ class WelcomeView extends React.Component{
             if (counter > 3) {
                 counter = 0;
             }
-            $('#door').detach().appendTo(steps[counter]);
+            door.parentNode.removeChild(door);
+            document.querySelector(steps[counter]).appendChild(door);
         }
 
-        $('#enter').click(enter);
+        enterBtn.addEventListener("click", enter);
     }
 }
 
