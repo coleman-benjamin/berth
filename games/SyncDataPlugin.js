@@ -114,6 +114,9 @@ class SyncDataPlugin {
             }
             meta[scriptsField] = compiledScripts;
 
+            // Add which version is being built, for sorting if ever
+            meta.buildType = this.options.mode === "development" ? "dev" : "build";
+
             /*
                 Assign meta to data object and write to file
              */

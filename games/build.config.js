@@ -14,7 +14,7 @@ module.exports = {
         new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
     ],
     syncDataConfig : {
-        dataPath : "../web/data/build.json",
+        dataPath : "../web/data/games.json",
         publicBuildDir : "/build/[module_name]/"
     }
 };
