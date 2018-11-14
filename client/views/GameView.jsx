@@ -29,7 +29,7 @@ class GameView extends React.Component {
         return (
             <iframe
                 ref={(f) => this.iFrame = f }
-                src='/frame.html'
+                src='/game.html'
                 scrolling='no'
                 frameBorder='0'
             >
