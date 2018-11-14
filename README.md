@@ -48,7 +48,7 @@ npm run game -- --game=[module_name]
 
 See `/games/src/example`. 
 
-Run `npm run game --game=example`.
+Run `npm run game -- --game=example`.
 
 #### Package Client
 ```
