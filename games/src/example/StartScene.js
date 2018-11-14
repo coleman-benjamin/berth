@@ -19,9 +19,9 @@ class StartScene extends Phaser.Scene {
             sideY2 = baseY - (baseY / 5);
 
         this.scapulaGroup = [
-            new Scapula(this, baseX, baseY, width / 2, height * 0.1, 5),
-            new Scapula(this, baseX, baseY, width * 0.25, height * 0.4, 3),
-            new Scapula(this, baseX, baseY, width - width * 0.25, height * 0.4, 3),
+            new Scapula(this, baseX, baseY, width / 2, height * 0.1, 5, true),
+            new Scapula(this, baseX, baseY, width * 0.25, height * 0.4, 3, true),
+            new Scapula(this, baseX, baseY, width - width * 0.25, height * 0.4, 3, true),
             new Scapula(this, sideX1, sideY1, sideX2, sideY2, 2),
             new Scapula(this, width - (sideX1), sideY1, width - (sideX2), sideY2, 2)
         ];

@@ -1,7 +1,7 @@
 import * as Phaser from 'phaser';
 
 class Scapula {
-    constructor(scene, startX, startY, endX, endY, maxScale) {
+    constructor(scene, startX, startY, endX, endY, maxScale, showTrajectory) {
         this.scene = scene;
         this.startX = startX;
         this.startY = startY;
@@ -18,16 +18,20 @@ class Scapula {
         this.mod = 6;
 
         /*
-            Draw trajectory
+            Animation trajectory
          */
         this.trajectory = new Phaser.Geom.Line(this.startX, this.startY, this.endX, this.endY);
-        this.graphics = this.scene.add.graphics({
-            lineStyle: {
-                width: 2,
-                color: 0xefc53f
-            }
-        });
-        this.graphics.strokeLineShape(this.trajectory);
+
+        // Optionally draw the trajectory
+        if (showTrajectory) {
+            this.graphics = this.scene.add.graphics({
+                lineStyle: {
+                    width: 2,
+                    color: 0xefc53f
+                }
+            });
+            this.graphics.strokeLineShape(this.trajectory);
+        }
 
         /*
             Get rotation
