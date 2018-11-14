@@ -40,16 +40,21 @@ npm install
 ```
 
 #### Package Game
-
-See example
-
 ```
-# If someone can tell me a better way to pass args, please do
+# Let me know when there's a nicer way to pass args via NPM
 #
-npm run game -- game=[module_name]
+npm run game -- --game=[module_name]
 ```
+
+See `/games/src/example`. 
+
+Run `npm run game --game=example`.
 
 #### Package Client
 ```
 npm run client
 ```
+
+#### Development packaging
+
+Prefix with `dev-`, e.g. `npm run dev-client` to create unminified packages for development purposes.
