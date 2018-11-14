@@ -2,6 +2,7 @@
 
 // Globals
 __root = __dirname.replace(/[\\]/g, "/");
+__src = __root + "/src";
 
 // Imports
 const express = require('express');
@@ -10,12 +11,12 @@ const cookieParser= require("cookie-parser");
 const fs = require("fs");
 const path = require('path');
 const config = require(__root + "/config");
-const exceptionResponse = require(__root + "/exception/ExceptionResponse");
+const exceptionResponse = require(__src + "/exception/ExceptionResponse");
 
 /*
 	Path to public serving directory
 */
-const publicPath = path.resolve(__dirname, '../../../public');
+const publicPath = path.resolve(__dirname, './public');
 
 /*
 	Express App configuration
@@ -33,7 +34,7 @@ app.use(bodyParser.urlencoded({
 /*
 	Load the Controllers / Register Controller Routes
 */
-let controllersPath = __root + "/controller/";
+const controllersPath = __src + "/controller/";
 let fileNames = fs.readdirSync(controllersPath);
 fileNames.forEach( (fileName) => {
     let controller = require(controllersPath + fileName);

@@ -2,13 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import Legend from "./components/views/LegendView.jsx";
-import Welcome from "./components/views/WelcomeView.jsx";
-import LinesIndex from "./components/views/LinesIndexView.jsx";
-import InteractionsIndex from "./components/views/InteractionsIndexView.jsx";
-import LinesShow from "./components/views/LinesShowView.jsx";
-import Settings from "./components/views/SettingsView.jsx";
-import About from "./components/views/AboutView.jsx";
+import Legend from "./views/LegendView.jsx";
+import Welcome from "./views/WelcomeView.jsx";
+import LinesIndex from "./views/LinesIndexView.jsx";
+import InteractionsIndex from "./views/InteractionsIndexView.jsx";
+import LinesShow from "./views/LinesShowView.jsx";
+import Settings from "./views/SettingsView.jsx";
+import About from "./views/AboutView.jsx";
 
 ReactDOM.render(
     <Router>

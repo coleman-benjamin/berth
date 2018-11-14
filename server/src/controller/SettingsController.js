@@ -1,4 +1,4 @@
-const GameService = require(__root + "/service/GameService");
+const GameService = require(__src + "/service/GameService");
 
 const gameService = new GameService();
 

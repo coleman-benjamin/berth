@@ -1,13 +1,13 @@
 const path = require("path");
 
 module.exports = options => {
-    const entry = path.resolve(__dirname, "./src/client/main.jsx");
+    const entry = path.resolve(__dirname, "./main.jsx");
     return {
         entry: entry,
         output: {
             pathinfo: true,
-            path : path.resolve(__dirname, "../public/web/"),
-            filename: 'web.bundle.js',
+            path : path.resolve(__dirname, "../server/public/client/"),
+            filename: 'client.bundle.js',
         },
         module: {
             rules: [
