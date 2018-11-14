@@ -4,8 +4,9 @@ module.exports = {
     watch : false,
     stats : { warnings: false },
     minimize : true,
-    outputRoot : "../server/public/build/",
-    buildRoot : "/build",
+    inputRoot : "src/",
+    outputRoot : "../server/public/js/games/",
+    buildRoot : "/js/games",
     env : {
         mode : "production",
         buildDev : false
@@ -15,6 +16,6 @@ module.exports = {
     ],
     syncDataConfig : {
         dataPath : "../server/data/games.json",
-        publicBuildDir : "/build/[module_name]/"
+        publicBuildDir : "/js/games/[module_name]/"
     }
 };

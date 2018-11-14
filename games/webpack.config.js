@@ -9,12 +9,12 @@ module.exports = function(env, argv) {
         Validate arguments
      */
     if (!argv.game) {
-        let msg = "Error : Pass in module name, e.g. npm run dev -- --game=myGame";
+        let msg = "Error : Pass in module name, e.g. npm run game -- --game=myGame";
         console.log(msg);
         process.exit(1);
     }
     if (!argv.mode && (argv.mode === "development" || argv.mode === "production")) {
-        let msg = "Error : Pass in mode, development or production. Use npm run [build or dev] --game=myGame";
+        let msg = "Error : Pass in mode, development or production. Use npm [game or dev-game] --game=myGame";
         console.log(msg);
         process.exit(1);
     }
@@ -29,8 +29,8 @@ module.exports = function(env, argv) {
     /*
         Declarations
      */
-    const inputPath = path.resolve(__dirname, "src/[module_name]".replace("[module_name]", moduleName));
-    const outputPath = path.resolve(__dirname, __config__.outputRoot + '[module_name]'.replace("[module_name]", moduleName));
+    const inputPath = path.resolve(__dirname, __config__.inputRoot + moduleName);
+    const outputPath = path.resolve(__dirname, __config__.outputRoot + moduleName);
     const publicPath = './';
     const entryConfig = {};
     const outputConfig = {};
@@ -39,8 +39,8 @@ module.exports = function(env, argv) {
     /*
         Entry Config
     */
-    entryConfig["js/" + moduleName] = inputPath + "/main.js";
-    entryConfig["js/vendor"] = ['phaser'];
+    entryConfig[moduleName] = inputPath + "/main.js";
+    entryConfig["vendor"] = ['phaser'];
 
     /*
         Output Config
@@ -128,7 +128,7 @@ module.exports = function(env, argv) {
                 cacheGroups: {
                     vendor: {
                         chunks: 'all',
-                        name: 'js/vendor',
+                        name: 'vendor',
                         test: /[\\/]node_modules[\\/]/,
                         enforce: true
                     },

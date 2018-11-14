@@ -6,7 +6,7 @@ module.exports = options => {
         entry: entry,
         output: {
             pathinfo: true,
-            path : path.resolve(__dirname, "../server/public/client/"),
+            path : path.resolve(__dirname, "../server/public/js/"),
             filename: 'client.bundle.js',
         },
         module: {

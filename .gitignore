@@ -1,6 +1,9 @@
 node_modules/
-server/public/build/
-server/public/dev/
-server/public/client/
 .idea
 *.iml
+
+games/src/*
+games/src/!example
+
+server/public/js/games/*
+server/public/js/client.bundle.js

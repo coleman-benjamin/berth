@@ -1,28 +1,29 @@
 ## Berth
 
-This project is a testing / creation ground for visual / interactive web experiences, using Phaser 3.
+This project is a testing / creation ground for visual and interactive web experiences, using Phaser 3.
 
 Many thanks to [Photon Storm](https://github.com/photonstorm) for offering such a great framework to play with! [Phaser 3](https://github.com/photonstorm/phaser) kicks ass and is a lot of fun to code with!
 
-Special thanks to [nkholski](https://github.com/nkholski/phaser3-es6-webpack) for providing an informative place to start with Webpack / Babel configuration, specifically for Phaser 3 : [phaser3-es6-webpack](https://github.com/nkholski/phaser3-es6-webpack)
+Special thanks to [nkholski](https://github.com/nkholski) for providing an informative place to start with Webpack / Babel configuration, specifically for Phaser 3 : [phaser3-es6-webpack](https://github.com/nkholski/phaser3-es6-webpack)
 
 ### Pour Quel
 
 The objective is to have a framework that assists in creating prototypes, in effort to learn and execute various concepts or fancies, as well build examples to draw from.
 
-As a bonus, I've taken this project as an opportunity to explore React - good time to knock one out and get a firm grasp of React development principles.
+As a bonus, I've taken this project as an opportunity to explore React - good time to knock one out and get a firm grasp on React development principles.
 
-There are 3 components : **Games**, **Web** and **Public**.
+There are 3 components : **Games**, **Client** and **Server**.
 
 #### Games
-- For writing game prototype source code
-- Each game / prototype is packaged and sent to **Public** via webpack / babel (packaging instructions below)
+- Game prototype source code
 
-#### Web
-- Contains Express server and React client source code
+#### Client
+- React client source code
 
-#### Public
-- Contains base HTML, client scripts, and all scripts / assets from packaged games
+#### Server
+- Express server based on a pattern I've used and simplified upon for many APIs, this time with ES6 `oh boy`
+- The `/public` destination for **Games** and **Client** packages
+- Filesystem data storage for game meta data (JSON)
 
 ### L'App
 
@@ -33,32 +34,22 @@ cd berth
 npm install
 ```
 
-#### Generate prototype base
+#### Generate base prototype
 ```
-Coming soon!
+#In the works
 ```
 
 #### Package Game
-##### dev
+
+Currently my game source is in the repository. I'll replace this with a how-to and where when I pull the source and leave a sample
+
 ```
-npm run dev-game -- --game=[module_name]
-```
-##### build
-```
-npm run build-game -- --game=[module_name]
+# If someone can tell me a better way to pass args, please do
+#
+npm run game -- game=[module_name]
 ```
 
 #### Package Client
-##### dev
 ```
-npm run dev-client
-```
-##### build
-```
-npm run build-client
-```
-
-#### Serve
-```
-npm run web
+npm run client
 ```

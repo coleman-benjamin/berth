@@ -11,7 +11,7 @@ class AboutView extends React.Component {
                 <p>It is built to be simple, both in code and in design.</p>
                 <p>Slowly achieving great speed.</p>
                 <p>Author : Benjamin Coleman</p>
-                <p>Github : <a href="https://github.com/coleman-benjamin/moth">https://github.com/coleman-benjamin/moth</a></p>
+                <p>Github : <a href="https://github.com/coleman-benjamin/berth">https://github.com/coleman-benjamin/berth</a></p>
 
                 <div>
                     <BackButton href="/"/>

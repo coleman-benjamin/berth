@@ -6,10 +6,10 @@
     "main": "index.js",
     "scripts": {
         "server": "node ./server/server.js",
-        "dev-client": "webpack --mode=development --config ./client/webpack.config.js",
-        "build-client": "webpack --mode=production --config ./client/webpack.config.js",
-        "dev-game": "webpack --mode=development --config ./games/webpack.config.js",
-        "build-game": "webpack  --mode=production --config ./games/webpack.config.js"
+        "game": "webpack --mode=production --config ./games/webpack.config.js",
+        "client": "webpack --mode=production --config ./client/webpack.config.js",
+        "dev-game": "webpack  --mode=development --config ./games/webpack.config.js",
+        "dev-client": "webpack --mode=development --config ./client/webpack.config.js"
     },
     "license": "MIT",
     "devDependencies": {

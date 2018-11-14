@@ -64,7 +64,7 @@ class SyncDataPlugin {
             return;
         }
         if (!this.checkFileExists(this.options.metaPath)) {
-            console.log(this.errorMsgBase + "Missing module meta file.");
+            console.log(this.errorMsgBase + "Missing module meta file. Configured path : " + this.options.metaPath);
             return;
         }
 
