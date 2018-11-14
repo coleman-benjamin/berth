@@ -21,7 +21,7 @@ There are 3 components : **Games**, **Client** and **Server**.
 - React client source code
 
 #### Server
-- Express server based on a pattern I've used and simplified upon for many APIs, this time with ES6 `oh boy`
+- Express server based on a pattern I've used and simplified upon for many APIs, this time with ES6
 - The `/public` destination for **Games** and **Client** packages
 - Filesystem data storage for game meta data (JSON)
 
@@ -36,12 +36,12 @@ npm install
 
 #### Generate base prototype
 ```
-#In the works
+# In the works
 ```
 
 #### Package Game
 
-Currently my game source is in the repository. I'll replace this with a how-to and where when I pull the source and leave a sample
+See example
 
 ```
 # If someone can tell me a better way to pass args, please do

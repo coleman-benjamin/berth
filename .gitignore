@@ -3,7 +3,7 @@ node_modules/
 *.iml
 
 games/src/*
-games/src/!example
+!games/src/example
 
 server/public/js/games/*
 server/public/js/client.bundle.js
