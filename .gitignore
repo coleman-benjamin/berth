@@ -7,3 +7,4 @@ games/src/*
 
 server/public/js/games/*
 server/public/js/client.bundle.js
+server/data/*

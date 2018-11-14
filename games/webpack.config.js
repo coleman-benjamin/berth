@@ -76,7 +76,8 @@ module.exports = function(env, argv) {
         mode : __config__.env.mode,
         publicBuildDir : __config__.syncDataConfig.publicBuildDir,
         dataPath : path.resolve(__dirname, __config__.syncDataConfig.dataPath),
-        metaPath : path.resolve(__dirname, inputPath + "/meta.json"),
+        filename : __config__.syncDataConfig.filename,
+        metaPath : path.resolve(__dirname, inputPath + "/meta.json")
     }));
 
     /*

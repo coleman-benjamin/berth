@@ -13,6 +13,7 @@ class SyncDataPlugin {
             moduleName : [String],  // Module name (required)
             mode : [String],        // Compile mode (required)
             dataPath : [String]     // Path to data folder (required)
+            filename : [String]     // Name of file containing data
             metaPath : [String]     // Path to module meta file (required)
      */
     constructor(options) {
@@ -29,6 +30,8 @@ class SyncDataPlugin {
             return "Missing option : moduleName";
         if (!this.options.dataPath)
             return "Missing option : dataPath";
+        if (!this.options.filename)
+            return "Missing option : filename";
         if (!this.options.metaPath)
             return "Missing option : metaPath";
         if (!this.options.publicBuildDir)
@@ -48,6 +51,10 @@ class SyncDataPlugin {
     getJsonFromFile(path) {
         let file = fs.readFileSync(path, { encoding : "utf8" });
         return JSON.parse(new Buffer(file).toString());
+    }
+
+    createDataDirectory(path) {
+        fs.mkdirSync(path);
     }
 
     writeJsonObjectToFile(path, jsonObject) {
@@ -96,8 +103,10 @@ class SyncDataPlugin {
                 Get data file if exists, or empty object if not
              */
             let data = {};
-            if (ctx.checkFileExists(this.options.dataPath)) {
-                data = ctx.getJsonFromFile(this.options.dataPath);
+            if (ctx.checkFileExists(this.options.dataPath + this.options.filename)) {
+                data = ctx.getJsonFromFile(this.options.dataPath + this.options.filename);
+            } else {
+                ctx.createDataDirectory(this.options.dataPath);
             }
 
             /*
@@ -121,9 +130,9 @@ class SyncDataPlugin {
                 Assign meta to data object and write to file
              */
             data[this.options.moduleName] = meta;
-            ctx.writeJsonObjectToFile(this.options.dataPath, data);
+            ctx.writeJsonObjectToFile(this.options.dataPath + this.options.filename, data);
 
-            console.log("SyncDataPlugin :::: finished writing data to " + this.options.dataPath);
+            console.log("SyncDataPlugin :::: finished writing data to " + this.options.dataPath + this.options.filename);
             console.log("--------------------------");
         })
     }

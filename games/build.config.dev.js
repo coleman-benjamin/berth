@@ -10,7 +10,8 @@ module.exports = {
         buildDev : true
     },
     syncDataConfig : {
-        dataPath : "../server/data/games.json",
+        dataPath : "../server/data",
+        filename : "/games.json",
         publicBuildDir : "/js/games/[module_name]/"
     }
 };
