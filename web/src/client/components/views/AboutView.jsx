@@ -1,7 +1,7 @@
-import React, { Component } from "react";
+import React from "react";
 import BackButton from "../buttons/BackButton.jsx";
 
-class AboutView extends Component {
+class AboutView extends React.Component {
     render() {
         return (
             <div>

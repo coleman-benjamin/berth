@@ -1,7 +1,6 @@
 const GameService = require(__root + "/service/GameService");
 
 const gameService = new GameService();
-const viewPath = "pages/lines/";
 
 class LineController extends require("./Controller") {
     constructor() {

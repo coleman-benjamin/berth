@@ -1,6 +1,6 @@
-import React, { Component } from "react";
+import React  from "react";
 
-class View500 extends Component {
+class View500 extends React.Component {
     render() {
         return (
             <div id="fiveHundad">

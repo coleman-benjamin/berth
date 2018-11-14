@@ -1,10 +1,10 @@
-import React, { Component } from "react";
+import React from "react";
 import BackButton from "../buttons/BackButton.jsx";
 import ReplayButton from "../buttons/ReplayButton.jsx";
 import ApiService from "../services/ApiService";
 import GameView from "./GameView.jsx";
 
-class LinesShowView extends Component {
+class LinesShowView extends React.Component {
     constructor(props) {
         super(props);
         this.apiService = new ApiService();

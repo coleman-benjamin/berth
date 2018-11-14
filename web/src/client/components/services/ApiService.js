@@ -16,6 +16,12 @@ class ApiService {
             .then(response => callback(response))
             .catch(e => console.log(e));
     }
+
+    getSettings(callback) {
+        this.http.get("/api/settings/")
+            .then(response => callback(response))
+            .catch(e => console.log(e));
+    }
 }
 
 export default ApiService;

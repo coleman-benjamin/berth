@@ -18,6 +18,33 @@ a, p, h1, h2, h3, h4, h5, pre {
     letter-spacing: 2px;
 }
 
+ul {
+    list-style-type: none;
+}
+
+ul li {
+    margin-bottom: 10px;
+}
+
+a {
+    text-decoration: none;
+    padding-bottom: 1px;
+    border-bottom: 1px solid #aaaaaa;
+}
+
+a:hover,
+a:active {
+    color: #D06867;
+    border-color: #D06867;
+    -webkit-transition: color 0.1s, border-color 0.1s;
+    transition: color 0.1s, border-color 0.1s;
+}
+
+.content {
+    max-width: 1024px;
+    margin: auto;
+}
+
 /*
     Fix row
  */
@@ -72,6 +99,11 @@ a, p, h1, h2, h3, h4, h5, pre {
 /*
     BUTTONS
  */
+
+.active-btn {
+    background-color: #D06867;
+    color : #4B5D50;
+}
 
 .red-btn {
     text-decoration: none;
@@ -142,6 +174,7 @@ a, p, h1, h2, h3, h4, h5, pre {
     line-height: 0;
     text-decoration: none;
     color: inherit;
+    border-width: 2px;
 }
 
 #legend li:active,

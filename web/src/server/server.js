@@ -10,6 +10,7 @@ const cookieParser= require("cookie-parser");
 const fs = require("fs");
 const path = require('path');
 const config = require(__root + "/config");
+const exceptionResponse = require(__root + "/exception/ExceptionResponse");
 
 /*
 	Path to public serving directory
@@ -43,6 +44,9 @@ fileNames.forEach( (fileName) => {
 
 // Direct all other calls to front end UI
 app.get("*", (req, res) => res.sendFile(publicPath + "/index.html"));
+
+// 404 / 500
+app.use(exceptionResponse.serverError);
 
 /*
     Start server

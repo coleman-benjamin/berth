@@ -1,6 +1,6 @@
-import React, { Component } from "react";
+import React  from "react";
 
-class View404 extends Component {
+class View404 extends React.Component {
     render() {
         return (
             <div id="fourOhFour">

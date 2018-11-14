@@ -1,7 +1,11 @@
-import React, { Component } from "react";
+import React  from "react";
 import { Link } from 'react-router-dom';
 
-class LegendView extends Component {
+class LegendView extends React.Component {
+    constructor() {
+        super();
+        this.active = "";
+    }
     render() {
         return (
             <ul id="legend">
@@ -14,12 +18,13 @@ class LegendView extends Component {
                 <li><a>&nbsp;</a></li>
                 <li><a>&nbsp;</a></li>
                 <li><a>&nbsp;</a></li>
-                <li><a>&nbsp;</a></li>
+                <li><a className={this.active} onClick={this.wave.bind(this)}>&nbsp;</a></li>
             </ul>
         );
     }
 
     componentDidMount() {
+        // Size items as a curve
         const maxHeight = 1000;
         const legendItems = document.querySelector("#legend").getElementsByTagName("li");
 
@@ -29,6 +34,10 @@ class LegendView extends Component {
             legendItems[x].firstElementChild.style.paddingBottom = currentHeight / 1.7 + 'px';
             currentHeight /= 1.25;
         }
+    }
+
+    wave() {
+        this.active = "active-btn";
     }
 }
 

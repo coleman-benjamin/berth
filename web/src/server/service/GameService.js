@@ -27,9 +27,9 @@ class GameService {
                 let result = records[id];
 
                 if (!result)
-                    throw new Exception.ResourceNotFoundException(this.constructor.name + " by query : id = \"" + id + "\"");
-
-                callback(err, result);
+                    callback(new Exception.ResourceNotFoundException("id = \"" + id + "\""));
+                else
+                    callback(err, result);
             }
         });
     }
