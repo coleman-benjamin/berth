@@ -3,9 +3,9 @@ const fs = require("fs");
 const moment = require("moment");
 const path = require("path");
 
-const TEMPLATE_PATH = "./template.js";
+const SRC_PATH = path.resolve(__dirname, "../src") + "/";
+const TEMPLATE_PATH = path.resolve(__dirname, "template.js");
 const TEMPLATE_SEPARATOR = ";;;\n";
-const SRC_PATH = path.resolve("../src") + "/";
 const FILENAMES = {
     MAIN : "main.js",
     META : "meta.json",
@@ -36,18 +36,18 @@ async function createGameBase(err, input) {
     let game_id = input.name.toLowerCase().replace(/ /, "_");
     let game_dir = SRC_PATH + game_id + "/";
 
-    let meta = {
+    let meta = JSON.stringify({
         "id" : game_id,
         "title" : input.name,
         "created_at" : moment().format()
-    };
+    }, null, 2);
 
     try {
         await createFolder(game_dir);
-        let template = await getTemplate()
+        let template = await getTemplate();
         writeFile(game_dir + FILENAMES.MAIN, template[0]).then(() => { console.log("Wrote " + game_dir + FILENAMES.MAIN)});
         writeFile(game_dir + FILENAMES.START_SCENE, template[1]).then(() => { console.log("Wrote " + game_dir + FILENAMES.START_SCENE)});
-        writeFile(game_dir + FILENAMES.META, JSON.stringify(meta, null, 2)).then(() => {console.log("Wrote " + game_dir + FILENAMES.META)});
+        writeFile(game_dir + FILENAMES.META, meta).then(() => {console.log("Wrote " + game_dir + FILENAMES.META)});
     } catch(e) {
         console.log(e);
     }
