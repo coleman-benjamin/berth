@@ -36,8 +36,10 @@ npm install
 
 #### Generate base prototype
 ```
-# In the works
+npm run gen
 ```
+
+You will be prompted for a game name, then it will generate some boilerplate game code to get started with into `/games/src/[name]`
 
 #### Package Game
 ```
