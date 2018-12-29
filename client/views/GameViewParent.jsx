@@ -4,7 +4,7 @@ import ReplayButton from "../buttons/ReplayButton.jsx";
 import ApiService from "../services/ApiService";
 import GameView from "./GameView.jsx";
 
-class LinesShowView extends React.Component {
+class GameViewParent extends React.Component {
     constructor(props) {
         super(props);
         this.apiService = new ApiService();
@@ -15,7 +15,7 @@ class LinesShowView extends React.Component {
     }
 
     componentDidMount() {
-        this.apiService.getLine(this.props.match.params.id, (response) => this.setState({line : response.data}));
+        this.apiService.getGame(this.props.match.params.id, (response) => this.setState({line : response.data}));
         window.addEventListener("message", this.handleFrameMessage.bind(this));
     }
 
@@ -46,11 +46,11 @@ class LinesShowView extends React.Component {
         return (
             <div>
                 <GameView game={this.state.line} ref={(r) => this.gameViewRef = r}/>
-                <BackButton href="/lines"/>
+                <BackButton href="/games"/>
                 <ReplayButton style={this.state.replayStyle} onClick={this.onReplayClick.bind(this)}/>
             </div>
         );
     }
 }
 
-export default LinesShowView;
+export default GameViewParent;

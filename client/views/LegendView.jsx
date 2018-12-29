@@ -10,10 +10,10 @@ class LegendView extends React.Component {
         return (
             <ul id="legend">
                 <li><Link to="/welcome">Welcome</Link></li>
-                <li><Link to="/lines">Lines</Link></li>
-                <li><Link to="/interactions">Interactions</Link></li>
+                <li><Link to="/games">Games</Link></li>
                 <li><Link to="/settings">Settings</Link></li>
                 <li><Link to="/about">About</Link></li>
+                <li><a>&nbsp;</a></li>
                 <li><a>&nbsp;</a></li>
                 <li><a>&nbsp;</a></li>
                 <li><a>&nbsp;</a></li>

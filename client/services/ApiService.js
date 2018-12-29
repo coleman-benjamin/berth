@@ -5,14 +5,14 @@ class ApiService {
         this.http = axios;
     }
 
-    getLines(callback) {
-        this.http.get("/api/lines")
+    getGames(callback) {
+        this.http.get("/api/games")
             .then(response => callback(response))
             .catch(e => console.log(e));
     }
 
-    getLine(lineId, callback) {
-        this.http.get("/api/lines/" + lineId)
+    getGame(gameId, callback) {
+        this.http.get("/api/games/" + gameId)
             .then(response => callback(response))
             .catch(e => console.log(e));
     }

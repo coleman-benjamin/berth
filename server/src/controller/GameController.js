@@ -2,10 +2,10 @@ const GameService = require(__src + "/service/GameService");
 
 const gameService = new GameService();
 
-class LineController extends require("./Controller") {
+class GameController extends require("./Controller") {
     constructor() {
         super();
-        this.prefix = "/api/lines";
+        this.prefix = "/api/games";
         this.routes = [
             { path: "/", method: this.METHOD.GET, handler: this.index },
             { path: "/:id", method: this.METHOD.GET, handler: this.show },
@@ -13,18 +13,18 @@ class LineController extends require("./Controller") {
     }
 
     index(req, res, next) {
-        gameService.getAllByCategory("lines", (err, lines) => {
+        gameService.getAll((err, games) => {
             if (err) next(err);
-            else res.json(lines);
+            else res.json(games);
         })
     }
 
     show(req, res, next) {
-        gameService.getById(req.params.id, (err, line) => {
+        gameService.getById(req.params.id, (err, game) => {
             if (err) next(err);
-            else res.json(line);
+            else res.json(game);
         });
     }
 }
 
-module.exports = new LineController();
+module.exports = new GameController();

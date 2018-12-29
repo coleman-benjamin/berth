@@ -7,13 +7,13 @@ class GameService {
         this.gamesCollectionName = "games";
     }
 
-    getAllByCategory(category, callback) {
+    getAll(callback) {
         this.adapter.fetchCollection(this.gamesCollectionName, (err, records) => {
             if (err) callback(err);
             else {
                 let result = [];
-                Object.keys(records).forEach((key) => {
-                    if (records[key].category === category) result.push(records[key]);
+                Object.keys(records).forEach((key) => { // Likely doesn't need to be stored as object, revisit this
+                    result.push(records[key]);
                 });
                 callback(err, result);
             }

@@ -4,6 +4,6 @@ module.exports = {
     },
 
     'session' : {
-        'secret' : 'imacat'
+        'secret' : 'Bort Thompson'
     }
 };
