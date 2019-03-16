@@ -2,9 +2,6 @@ node_modules/
 .idea
 *.iml
 
-games/src/*
-!games/src/example
-
 server/public/js/games/*
 server/public/js/client.bundle.js
 server/data/*

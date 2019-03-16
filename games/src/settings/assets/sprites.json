@@ -1,0 +1,164 @@
+{
+    "frames": {
+        "improv-1.png": {
+            "frame": {"x": 0, "y": 0, "w": 32, "h": 48},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x": 0, "y": 0, "w": 32, "h": 48},
+            "sourceSize": {"w": 32, "h": 48},
+            "pivot" : {"x" : 0.5, "y" : 0.5}
+        },
+        "improv-2.png": {
+            "frame": {
+                "x": 0,
+                "y": 48,
+                "w": 32,
+                "h": 48
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 32,
+                "h": 48
+            },
+            "sourceSize": {
+                "w": 32,
+                "h": 48
+            }
+        },
+        "improv-3.png": {
+            "frame": {
+                "x": 0,
+                "y": 96,
+                "w": 32,
+                "h": 48
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 32,
+                "h": 48
+            },
+            "sourceSize": {
+                "w": 32,
+                "h": 48
+            }
+        },
+        "improv-4.png": {
+            "frame": {
+                "x": 0,
+                "y": 144,
+                "w": 32,
+                "h": 48
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 32,
+                "h": 48
+            },
+            "sourceSize": {
+                "w": 32,
+                "h": 48
+            }
+        },
+        "improv-5.png": {
+            "frame": {
+                "x": 0,
+                "y": 192,
+                "w": 32,
+                "h": 48
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 32,
+                "h": 48
+            },
+            "sourceSize": {
+                "w": 32,
+                "h": 48
+            }
+        },
+        "improv-6.png": {
+            "frame": {
+                "x": 0,
+                "y": 240,
+                "w": 32,
+                "h": 48
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 32,
+                "h": 48
+            },
+            "sourceSize": {
+                "w": 32,
+                "h": 48
+            }
+        },
+        "improv-7.png": {
+            "frame": {
+                "x": 0,
+                "y": 288,
+                "w": 32,
+                "h": 48
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 32,
+                "h": 48
+            },
+            "sourceSize": {
+                "w": 32,
+                "h": 48
+            }
+        },
+        "improv-8.png": {
+            "frame": {
+                "x": 0,
+                "y": 336,
+                "w": 32,
+                "h": 48
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 32,
+                "h": 48
+            },
+            "sourceSize": {
+                "w": 32,
+                "h": 48
+            }
+        }
+    },
+    "meta": {
+        "app": "https://www.codeandweb.com/texturepacker",
+        "version": "1.0",
+        "image": "sprites.png",
+        "format": "RGBA8888",
+        "size": {
+            "w": 32,
+            "h": 384
+        },
+        "scale": "1",
+        "smartupdate": "$TexturePacker:SmartUpdate:40455084f74c07b258901b2a8c97b746:a6c87da652dd31d08d6a5396a29e3164:1eabdf11f75e3a4fe3147baf7b5be24b$"
+    }
+}
