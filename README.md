@@ -60,3 +60,8 @@ npm run client
 #### Development packaging
 
 Prefix with `dev-`, e.g. `npm run dev-client` to create unminified packages for development purposes.
+
+#### Serve
+```
+npm run server
+```
