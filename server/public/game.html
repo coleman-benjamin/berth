@@ -8,14 +8,22 @@
 <body>
     <div id="game"></div>
     <script>
+        /*
+            take an array of script paths and load them into the DOM
+         */
         function loadGame(scripts) {
-            scripts.forEach(function(script) {
+            for (let script of scripts) {
                 let scriptEl = document.createElement("script");
                 scriptEl.type = "text/javascript";
                 scriptEl.src = script;
+
                 document.body.appendChild(scriptEl);
-            });
+            }
         }
+
+        /*
+            receive the scripts from the parent window
+         */
         window.addEventListener("message", function(e) {
             if (e.data.scripts) loadGame(e.data.scripts);
         }, false);
