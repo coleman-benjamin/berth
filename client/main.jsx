@@ -6,7 +6,6 @@ import Legend from "./views/LegendView.jsx";
 import Welcome from "./views/WelcomeView.jsx";
 import GamesIndex from "./views/GamesIndexView.jsx";
 import GameViewParent from "./views/GameViewParent.jsx";
-import Settings from "./views/SettingsView.jsx";
 import About from "./views/AboutView.jsx";
 
 ReactDOM.render(
@@ -16,7 +15,6 @@ ReactDOM.render(
             <Route path="/welcome" component={Welcome} />
             <Route exact path="/games" component={GamesIndex} />
             <Route path="/games/:id" component={GameViewParent} />
-            <Route path="/settings" component={Settings} />
             <Route path="/about" component={About} />
         </Switch>
     </Router>, document.querySelector('#root')
