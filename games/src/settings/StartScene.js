@@ -1,10 +1,11 @@
-import Phaser from 'phaser';
+import {BaseScene} from "../BaseScene";
 import * as dat from 'dat.gui';
 
-class StartScene extends Phaser.Scene {
+export class StartScene extends BaseScene {
 
     constructor() {
-        super();
+        super("StartScene");
+
         this.settings = null;
         this.numSettings = null;
         this.rows = null;
@@ -18,7 +19,7 @@ class StartScene extends Phaser.Scene {
     }
 
     preload() {
-        this.load.path = process.env.BUILD_ROOT + "/settings/assets/";
+        this.load.path = process.env.ASSETS_PATH;
         this.load.atlas('sprites', 'sprites.png', 'sprites.json');
     }
 
@@ -107,5 +108,3 @@ class StartScene extends Phaser.Scene {
         this.counter ++;
     }
 }
-
-export default StartScene;

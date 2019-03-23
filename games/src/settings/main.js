@@ -1,16 +1,5 @@
-import Phaser from 'phaser';
-import StartScene from './StartScene';
+import {Loader} from "../Loader";
 
-let initWidth = document.querySelector("#game").offsetWidth;
-let initHeight = initWidth / 2;
+import {StartScene} from './StartScene';
 
-const game = new Phaser.Game({
-    parent: "game",
-    type: Phaser.AUTO,
-    width: initWidth,
-    height: initHeight,
-    backgroundColor : '#22292f',
-    scene: [
-        StartScene
-    ]
-});
+Loader.loadGame([StartScene]);
