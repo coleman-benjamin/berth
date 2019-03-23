@@ -25,7 +25,7 @@ class GameViewParent extends React.Component {
 
     handleFrameMessage(e) {
         // Show replay button on game done event
-        if (e.data === "done") {
+        if (e.data === "showReplay") {
             this.setState({
                 replayStyle : {"display" : "block"}
             });
