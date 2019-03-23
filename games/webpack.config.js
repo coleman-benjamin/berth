@@ -105,6 +105,7 @@ module.exports = function(env, argv) {
             e.g. : this.load.path = process.env.BUILD_ROOT + "/not_literally/assets/";
          */
         pluginsConfig.push(new webpack.DefinePlugin({'process.env.BUILD_ROOT': "'" + __config__.buildRoot + "'"}));
+        pluginsConfig.push(new webpack.DefinePlugin({'process.env.ASSETS_PATH': "'" + __config__.syncDataConfig.publicBuildDir.replace("[module_name]", moduleName) + "/assets/'"})); // TODO: Refactor the f out of this
     }
 
     /*

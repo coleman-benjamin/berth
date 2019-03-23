@@ -1,9 +1,13 @@
-import * as Phaser from 'phaser';
+import {BaseScene} from "../BaseScene";
 
-class StartScene extends Phaser.Scene {
+class StartScene extends BaseScene {
+
+    constructor() {
+        super("StartScene")
+    }
 
     preload() {
-        this.load.path = process.env.BUILD_ROOT + "/not_literally/assets/";
+        this.load.path = process.env.ASSETS_PATH;
         this.load.atlas('lines', 'spritesheet.png', 'spritesheet.json');
     }
 
