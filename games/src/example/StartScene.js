@@ -1,9 +1,9 @@
-import * as Phaser from 'phaser';
+import {BaseScene} from "../BaseScene";
 import Scapula from './gameobject/Scapula';
 
-class StartScene extends Phaser.Scene {
+class StartScene extends BaseScene {
     constructor() {
-        super({ key : 'sceneOne' });
+        super("StartScene", true);
     }
 
     create() {
@@ -26,23 +26,15 @@ class StartScene extends Phaser.Scene {
             new Scapula(this, width - (sideX1), sideY1, width - (sideX2), sideY2, 2)
         ];
 
-        window.addEventListener("message", this.onRestart.bind(this));
-
+        // Listen for the last Scapula to say "done"
         this.scapulaGroup[this.scapulaGroup.length - 1].emitter.on('done', () => {
-            parent.postMessage("done", "*");
-            this.scene.pause();
+            this.endScene(true);
         }, this);
     }
 
     update() {
-        this.scapulaGroup.forEach((scapula) => {
+        for (const scapula of this.scapulaGroup) {
             scapula.update();
-        });
-    }
-
-    onRestart(e) {
-        if (e.data === "replay") {
-            this.scene.restart();
         }
     }
 }

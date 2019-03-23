@@ -1,8 +1,9 @@
 import * as Phaser from 'phaser';
+import {BaseScene} from "../BaseScene";
 
-class EndScene extends Phaser.Scene {
+class EndScene extends BaseScene {
     constructor() {
-        super({ key : "sceneTwo" });
+        super("EndScene");
     }
 
     init(data) {
@@ -12,7 +13,7 @@ class EndScene extends Phaser.Scene {
 
     create() {
         this.counter = 0;
-        this.lineC = 0;
+        this.lineCounter = 0;
 
         this.startPoints = [];
         this.lineGroup = [];
@@ -35,23 +36,24 @@ class EndScene extends Phaser.Scene {
 
     update() {
         this.graphics.clear();
-        this.lineGroup.forEach((line, index) => {
+
+        for (let [index, line] of this.lineGroup.entries()) {
             if (line.y2 < this.endY) {
                 line.setTo(this.startPoints[index].x, this.startPoints[index].y, this.startPoints[index].x, line.y2 + 2);
             }
             this.graphics.strokeLineShape(line);
-        });
+        }
 
         this.counter++;
         if (this.counter % this.mod === 0) {
-            this.lineC++;
+            this.lineCounter++;
 
-            if (this.lineC < this.startPoints.length) {
-                let nextP = this.startPoints[this.lineC];
+            // Draw next line or end scene
+            if (this.lineCounter < this.startPoints.length) {
+                let nextP = this.startPoints[this.lineCounter];
                 this.lineGroup.push(new Phaser.Geom.Line(nextP.x, nextP.y, nextP.x, nextP.y));
             } else {
-                parent.postMessage("done", "*");
-                this.scene.pause();
+                super.endScene(true);
             }
 
             this.counter = 0;

@@ -1,8 +1,9 @@
-import * as Phaser from 'phaser';
+import {BaseScene} from "../BaseScene";
+import * as Phaser from "phaser";
 
-class StartScene extends Phaser.Scene {
+class StartScene extends BaseScene {
     constructor() {
-        super({ key : 'sceneOne' });
+        super("StartScene", true);
     }
 
     create() {
@@ -18,9 +19,8 @@ class StartScene extends Phaser.Scene {
                 color: 0x9e3f76
             }
         });
-        this.mod = Math.floor(this.sys.game.config.height / this.numLines);
 
-        window.addEventListener("message", this.onRestart.bind(this));
+        this.mod = Math.floor(this.sys.game.config.height / this.numLines);
     }
 
     update() {
@@ -43,7 +43,7 @@ class StartScene extends Phaser.Scene {
             this.counter ++;
         } else {
             this.scene.pause();
-            this.scene.launch('sceneTwo', {
+            this.scene.launch('EndScene', {
                 endY : this.lineGroupA[0].y1,
                 firstLine : this.lineGroupB[0]
             });
@@ -52,7 +52,7 @@ class StartScene extends Phaser.Scene {
 
     onRestart(e) {
         if (e.data === "replay") {
-            this.scene.setVisible(false, 'sceneTwo');
+            this.scene.setVisible(false);
             this.scene.restart();
         }
     }
