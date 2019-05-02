@@ -9,13 +9,13 @@ class GameViewParent extends React.Component {
         super(props);
         this.apiService = new ApiService();
         this.state = {
-            line : {},
-            replayStyle : {"display" : "none"}
+            line: {},
+            replayStyle: { "display": "none" }
         }
     }
 
     componentDidMount() {
-        this.apiService.getGame(this.props.match.params.id, (response) => this.setState({line : response.data}));
+        this.apiService.getGame(this.props.match.params.id, (response) => this.setState({ line: response.data }));
         window.addEventListener("message", this.handleFrameMessage.bind(this));
     }
 
@@ -27,7 +27,7 @@ class GameViewParent extends React.Component {
         // Show replay button on game done event
         if (e.data === "showReplay") {
             this.setState({
-                replayStyle : {"display" : "block"}
+                replayStyle: { "display": "block" }
             });
         }
     }
@@ -38,16 +38,16 @@ class GameViewParent extends React.Component {
 
         // Hide replay button
         this.setState({
-            replayStyle : {"display" : "none"}
+            replayStyle: { "display": "none" }
         });
     }
 
     render() {
         return (
             <div>
-                <GameView game={this.state.line} ref={(r) => this.gameViewRef = r}/>
-                <BackButton href="/games"/>
-                <ReplayButton style={this.state.replayStyle} onClick={this.onReplayClick.bind(this)}/>
+                <GameView game={this.state.line} ref={(r) => this.gameViewRef = r} />
+                <BackButton href="/games" />
+                <ReplayButton style={this.state.replayStyle} onClick={this.onReplayClick.bind(this)} />
             </div>
         );
     }

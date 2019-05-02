@@ -1,40 +1,29 @@
-import Phaser from 'phaser';
-import StartScene from "./StartScene";
+// Loader loads
+import { Loader } from "../loader";
 
-let initWidth = document.querySelector("#game").offsetWidth;
-let initHeight = initWidth / 2;
+// Add Scenes
+import { StartScene } from './start_scene';
 
-const game = new Phaser.Game({
-    parent: "game",
-    type: Phaser.AUTO,
-    width: initWidth,
-    height: initHeight,
-    backgroundColor : '#22292f',
-    scene: [
-        StartScene
-    ]
-});
+// Loader load
+Loader.loadGame([StartScene]);
 ;;;
 import * as Phaser from 'phaser';
+import { BaseScene } from "../base_scene";
 
-class StartScene extends Phaser.Scene {
+export class StartScene extends BaseScene {
     constructor() {
-        super({ key : 'startScene' });
+        super({ key: 'startScene' });
+    }
+
+    preload() {
+
     }
 
     create() {
-        window.addEventListener("message", this.onRestart.bind(this));
+
     }
 
     update() {
 
     }
-
-    onRestart(e) {
-        if (e.data === "replay") {
-            this.scene.restart();
-        }
-    }
 }
-
-export default StartScene;

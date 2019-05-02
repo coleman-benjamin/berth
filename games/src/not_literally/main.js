@@ -1,5 +1,5 @@
 import {Loader} from "../Loader";
 
-import StartScene from './StartScene';
+import StartScene from './start_scene';
 
 Loader.loadGame([StartScene]);
