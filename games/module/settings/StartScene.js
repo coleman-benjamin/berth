@@ -1,4 +1,4 @@
-import { BaseScene } from "../base_scene";
+import { BaseScene } from "../../src/base_scene";
 import * as dat from 'dat.gui';
 
 export class StartScene extends BaseScene {

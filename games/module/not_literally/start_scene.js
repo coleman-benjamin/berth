@@ -1,4 +1,4 @@
-import { BaseScene } from "../base_scene";
+import { BaseScene } from "../../src/base_scene";
 
 class StartScene extends BaseScene {
 
