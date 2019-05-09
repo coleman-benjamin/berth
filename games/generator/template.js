@@ -7,12 +7,12 @@ import { StartScene } from './start_scene';
 // Loader load
 Loader.loadGame([StartScene]);
 ;;;
-import * as Phaser from 'phaser';
+import { Scene } from 'phaser';
 import { BaseScene } from "../base_scene";
 
-export class StartScene extends BaseScene {
+export class StartScene extends Scene {
     constructor() {
-        super({ key: 'startScene' });
+        super({ key: 'StartScene' });
     }
 
     preload() {

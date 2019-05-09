@@ -1,20 +1,20 @@
 const prompt = require("prompt");
-const fs = require("fs");
+const fs = require("fs-extra");
 const moment = require("moment");
 const path = require("path");
 
-const SRC_PATH = path.resolve(__dirname, "../src") + "/";
+const MODULE_PATH = path.resolve(__dirname, "../module") + "/";
 const TEMPLATE_PATH = path.resolve(__dirname, "template.js");
 const TEMPLATE_SEPARATOR = ";;;\n";
 const FILENAMES = {
-    MAIN : "main.js",
-    META : "meta.json",
-    START_SCENE : "StartScene.js"
+    MAIN: "main.js",
+    META: "meta.json",
+    START_SCENE: "start_scene.js"
 };
 
 const inputSchema = {
-    properties : {
-        name : {
+    properties: {
+        name: {
             pattern: /^[a-zA-Z\s\-]+$/,
             message: 'Game name must be only letters, spaces, or dashes',
             required: true
@@ -31,56 +31,44 @@ async function createGameBase(err, input) {
         console.log(err);
         return;
     }
+
     console.log("Creating base for " + input.name);
 
-    let game_id = input.name.toLowerCase().replace(/ /, "_");
-    let game_dir = SRC_PATH + game_id + "/";
+    // Configure name for game directory
+    const game_id = input.name.toLowerCase().replace(/ /, "_");
+    const game_dir = MODULE_PATH + game_id + "/";
 
-    let meta = JSON.stringify({
-        "id" : game_id,
-        "title" : input.name,
-        "created_at" : moment().format()
+    // Content for meta file, prettify for write
+    const meta = JSON.stringify({
+        "id": game_id,
+        "title": input.name,
+        "created_at": moment().format()
     }, null, 2);
 
     try {
-        await createFolder(game_dir);
-        let template = await getTemplate();
-        writeFile(game_dir + FILENAMES.MAIN, template[0]).then(() => { console.log("Wrote " + game_dir + FILENAMES.MAIN)});
-        writeFile(game_dir + FILENAMES.START_SCENE, template[1]).then(() => { console.log("Wrote " + game_dir + FILENAMES.START_SCENE)});
-        writeFile(game_dir + FILENAMES.META, meta).then(() => {console.log("Wrote " + game_dir + FILENAMES.META)});
-    } catch(e) {
+        // Create game directory
+        await fs.mkdir(game_dir);
+
+        // Get template file, 
+        const file = await fs.readFile(TEMPLATE_PATH);
+        const body = new Buffer(file).toString("utf8");
+        const template = body.split(TEMPLATE_SEPARATOR)
+
+        // File write operations
+        const writes = [
+            fs.writeFile(game_dir + FILENAMES.MAIN, template[0]),
+            fs.writeFile(game_dir + FILENAMES.START_SCENE, template[1]),
+            fs.writeFile(game_dir + FILENAMES.META, meta),
+        ];
+
+        Promise.all(writes)
+            .then(() => {
+                console.log(`Wrote template files to ${game_dir}`)
+            })
+            .catch((e) => {
+                console.log(e);
+            })
+    } catch (e) {
         console.log(e);
     }
 }
-
-async function createFolder(path) {
-    return new Promise((resolve, reject) => {
-        fs.mkdir(path, (err, result) => {
-            if (err) reject(err);
-            else resolve(result);
-        })
-    })
-}
-
-async function getTemplate() {
-    return new Promise((resolve, reject) => {
-        fs.readFile(TEMPLATE_PATH, (err, file) => {
-            if (err) reject(err);
-            else {
-                let body = new Buffer(file).toString("utf8");
-                resolve(body.split(TEMPLATE_SEPARATOR));
-            }
-        })
-    })
-}
-
-async function writeFile(path, body) {
-    return new Promise((resolve, reject) => {
-        fs.writeFile(path, body, (err, result) => {
-            if (err) reject(err);
-            else resolve(result);
-        })
-    })
-}
-
-
