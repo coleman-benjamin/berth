@@ -4,7 +4,7 @@ const fs = require('fs');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const SyncDataPlugin = require("./SyncDataPlugin");
 
-module.exports = function(env, argv) {
+module.exports = function (env, argv) {
     /*
         Validate arguments
      */
@@ -72,25 +72,25 @@ module.exports = function(env, argv) {
         Responsible for writing game meta data to storage
      */
     pluginsConfig.push(new SyncDataPlugin({
-        moduleName : moduleName,
-        mode : __config__.env.mode,
-        publicBuildDir : __config__.syncDataConfig.publicBuildDir,
-        dataPath : path.resolve(__dirname, __config__.syncDataConfig.dataPath),
-        filename : __config__.syncDataConfig.filename,
-        metaPath : path.resolve(__dirname, inputPath + "/meta.json")
+        moduleName: moduleName,
+        mode: __config__.env.mode,
+        publicBuildDir: __config__.syncDataConfig.publicBuildDir,
+        dataPath: path.resolve(__dirname, __config__.syncDataConfig.dataPath),
+        filename: __config__.syncDataConfig.filename,
+        metaPath: path.resolve(__dirname, inputPath + "/meta.json")
     }));
 
     /*
         Plugin : CopyWebpackPlugin
         Used when the project has assets (will probably elaborate)
      */
-    const assetsPath = path.resolve(__dirname, "./src/" + moduleName + "/assets");
+    const assetsPath = path.resolve(__dirname, "./module/" + moduleName + "/assets");
 
     let hasAssets = false;
     try {
         fs.statSync(path.resolve(__dirname, assetsPath)); // throw error if doesn't exist
         hasAssets = true;
-    } catch(e) {}
+    } catch (e) { }
 
     if (hasAssets) {
         pluginsConfig.push(new CopyWebpackPlugin([{
@@ -100,12 +100,12 @@ module.exports = function(env, argv) {
 
         /*
             When loading assets in the game, set the load path with the BUILD_ROOT environment variable
-            process.env.BUILD_ROOT can be accessed within the game, so you can preface your asset load calls
+            process.env.ASSETS_PATH can be accessed within the game, so you can preface your asset load calls
 
-            e.g. : this.load.path = process.env.BUILD_ROOT + "/not_literally/assets/";
+            e.g. : this.load.path = process.env.ASSETS_PATH;
          */
-        pluginsConfig.push(new webpack.DefinePlugin({'process.env.BUILD_ROOT': "'" + __config__.buildRoot + "'"}));
-        pluginsConfig.push(new webpack.DefinePlugin({'process.env.ASSETS_PATH': "'" + __config__.syncDataConfig.publicBuildDir.replace("[module_name]", moduleName) + "/assets/'"})); // TODO: Refactor the f out of this
+        pluginsConfig.push(new webpack.DefinePlugin({ 'process.env.BUILD_ROOT': "'" + __config__.buildRoot + "'" }));
+        pluginsConfig.push(new webpack.DefinePlugin({ 'process.env.ASSETS_PATH': "'" + __config__.syncDataConfig.publicBuildDir.replace("[module_name]", moduleName) + "assets/'" })); // TODO: Refactor the f out of this
     }
 
     /*
@@ -115,7 +115,7 @@ module.exports = function(env, argv) {
     console.log("Mode : " + mode);
     console.log("Module name : " + moduleName);
     console.log("Entry config : " + JSON.stringify(entryConfig, null, 2));
-    console.log("Output config : " + JSON.stringify(outputConfig, null, 2));
+    console.log("Output path : " + outputConfig.path);
     console.log("--------------------------");
 
     return {

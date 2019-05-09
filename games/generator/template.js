@@ -7,9 +7,9 @@ import { StartScene } from './start_scene';
 // Loader load
 Loader.loadGame([StartScene]);
 ;;;
-import { Scene } from 'phaser';
+import * as Phaser from 'phaser';
 
-export class StartScene extends Scene {
+export class StartScene extends Phaser.Scene {
     constructor() {
         super({ key: 'StartScene' });
     }

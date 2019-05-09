@@ -1,14 +1,13 @@
-import { BaseScene } from "../../src/base_scene";
+import * as Phaser from 'phaser';
 
-class StartScene extends BaseScene {
+class StartScene extends Phaser.Scene {
 
     constructor() {
-        super("StartScene", true)
+        super({ key: "StartScene" })
     }
 
     preload() {
-        super.preload();
-
+        this.load.path = process.env.ASSETS_PATH;
         this.load.atlas('lines', 'spritesheet.png', 'spritesheet.json');
     }
 
@@ -36,10 +35,7 @@ class StartScene extends BaseScene {
             targets: fuzz,
             displayWidth: this.sys.game.config.width,
             ease: 'Expo.easeInOut',
-            duration: 3000,
-            onComplete: () => {
-                this.endScene(true);
-            }
+            duration: 3000
         });
 
 
