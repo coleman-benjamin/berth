@@ -1,4 +1,4 @@
-import {BaseScene} from "../BaseScene";
+import { BaseScene } from "../base_scene";
 import Scapula from './gameobject/Scapula';
 
 class StartScene extends BaseScene {

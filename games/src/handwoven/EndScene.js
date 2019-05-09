@@ -1,5 +1,5 @@
 import * as Phaser from 'phaser';
-import {BaseScene} from "../BaseScene";
+import { BaseScene } from "../base_scene";
 
 class EndScene extends BaseScene {
     constructor() {
