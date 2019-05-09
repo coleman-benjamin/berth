@@ -1,5 +1,5 @@
 // Loader loads
-import { Loader } from "../loader";
+import { Loader } from "../src/loader";
 
 // Add Scenes
 import { StartScene } from './start_scene';
@@ -8,7 +8,6 @@ import { StartScene } from './start_scene';
 Loader.loadGame([StartScene]);
 ;;;
 import { Scene } from 'phaser';
-import { BaseScene } from "../base_scene";
 
 export class StartScene extends Scene {
     constructor() {
