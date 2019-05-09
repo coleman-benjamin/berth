@@ -1,4 +1,4 @@
-import {BaseScene} from "../BaseScene";
+import { BaseScene } from "../base_scene";
 import * as dat from 'dat.gui';
 
 export class StartScene extends BaseScene {
@@ -23,6 +23,43 @@ export class StartScene extends BaseScene {
         this.load.atlas('sprites', 'sprites.png', 'sprites.json');
     }
 
+    create() {
+        // TODO: cache
+        this.numSettings = 2; // can only be integer
+        this.rows = 1; // can only divide numSettings to integer (what's the term?)
+        this.updateStore();
+
+        this.animFrames = this.anims.generateFrameNames('sprites');
+        this.anims.create({
+            key: "anim",
+            frames: this.animFrames,
+            frameRate: 3,
+            repeat: -1
+        });
+
+        let points = this.calculatePoints(this.numSettings, this.rows);
+        this.settings = this.drawPoints(points);
+
+        const gui = new dat.GUI();
+        gui.add(this, "numSettings", this.numSettings, this.maxSettings).step(1);
+        gui.add(this, "rows", this.rows, this.maxRows).step(1);
+    }
+
+    update() {
+        if (this.counter % this.mod === 0) {
+            if (this.store.numSettings !== this.numSettings || this.store.rows !== this.rows) { // check settings changed
+                if (this.numSettings % this.rows === 0) { // check valid settings
+                    this.updateStore();
+                    let points = this.calculatePoints(this.numSettings, this.rows);
+                    this.settings.destroy(true);
+                    this.settings = this.drawPoints(points);
+                    this.rotate();
+                }
+            }
+        }
+        this.counter++;
+    }
+
     calculatePoints(numSettings, rows) {
         const points = [];
 
@@ -37,7 +74,7 @@ export class StartScene extends BaseScene {
 
         for (let r = 0; r < rows; r++) {
             for (let c = 0; c < columns; c++) {
-                points.push({x,y});
+                points.push({ x, y });
                 x += xInc;
             }
             x = xOrig;
@@ -58,28 +95,6 @@ export class StartScene extends BaseScene {
         return group;
     }
 
-    create() {
-        // TODO: cache
-        this.numSettings = 2; // can only be integer
-        this.rows = 1; // can only divide numSettings to integer (what's the term?)
-        this.updateStore();
-
-        this.animFrames = this.anims.generateFrameNames('sprites');
-        this.anims.create({
-            key : "anim",
-            frames: this.animFrames,
-            frameRate: 3,
-            repeat: -1
-        });
-
-        let points = this.calculatePoints(this.numSettings, this.rows);
-        this.settings = this.drawPoints(points);
-
-        const gui = new dat.GUI();
-        gui.add(this, "numSettings", this.numSettings, this.maxSettings).step(1);
-        gui.add(this, "rows", this.rows, this.maxRows).step(1);
-    }
-
     updateStore() {
         this.store = {
             numSettings: this.numSettings,
@@ -91,20 +106,5 @@ export class StartScene extends BaseScene {
         for (let setting of this.settings.getChildren()) {
             setting.angle = Phaser.Math.RND.between(-180, 180);
         }
-    }
-
-    update() {
-        if (this.counter % this.mod === 0) {
-            if (this.store.numSettings !== this.numSettings || this.store.rows !== this.rows) { // check settings changed
-                if (this.numSettings % this.rows === 0) { // check valid settings
-                    this.updateStore();
-                    let points = this.calculatePoints(this.numSettings, this.rows);
-                    this.settings.destroy(true);
-                    this.settings = this.drawPoints(points);
-                    this.rotate();
-                }
-            }
-        }
-        this.counter ++;
     }
 }
