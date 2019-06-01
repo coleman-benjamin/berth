@@ -66,13 +66,16 @@ class Scapula {
         let nextPoint = Phaser.Geom.Line.GetPoint(this.trajectory, this.pathPercentage);
 
         this.scene.tweens.add({
-            targets : curveObj,
-            x : nextPoint.x,
-            y : nextPoint.y,
-            scaleX : this.maxScale * this.pathPercentage,
-            scaleY : this.maxScale * this.pathPercentage,
+            targets: curveObj,
+            x: nextPoint.x,
+            y: nextPoint.y,
+            scaleX: this.maxScale * this.pathPercentage,
+            scaleY: this.maxScale * this.pathPercentage,
             duration: this.duration * this.pathPercentage,
-            ease :  'Expo.easeInOut'
+            ease: 'Expo.easeInOut',
+            onComplete: () => {
+                this.emitter.emit("done");
+            }
         });
 
         this.pathPercentage -= this.percentageDec;
@@ -84,11 +87,7 @@ class Scapula {
                 this.create();
                 this.counter = 0;
             }
-            this.counter ++;
-        } else {
-            if (!this.scene.tweens.getTweensOf(this.lastAddedCurve)[0].isPlaying()) {
-                this.emitter.emit("done");
-            }
+            this.counter++;
         }
     }
 }
