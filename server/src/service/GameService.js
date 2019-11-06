@@ -2,37 +2,29 @@ const FileSystem = require(__src + "/database/FileSystem");
 const Exception = require(__src + "/exception/Exception");
 
 class GameService {
-    constructor() {
-        this.adapter = new FileSystem(__root + "/data/");
-        this.gamesCollectionName = "games";
-    }
+	constructor() {
+		this.adapter = new FileSystem(__root + "/data/");
+		this.gamesCollectionName = "games";
+	}
 
-    getAll(callback) {
-        this.adapter.fetchCollection(this.gamesCollectionName, (err, records) => {
-            if (err) callback(err);
-            else {
-                let result = [];
-                Object.keys(records).forEach((key) => { // Likely doesn't need to be stored as object, revisit this
-                    result.push(records[key]);
-                });
-                callback(err, result);
-            }
-        });
-    }
+	async getAll() {
+		try {
+			const records = await this.adapter.fetchCollection(this.gamesCollectionName);
+			return Promise.resolve(Object.keys(records).map(r => records[r]));
+		} catch (e) {
+			return Promise.reject(e);
+		}
+	}
 
-    getById(id, callback) {
-        this.adapter.fetchCollection(this.gamesCollectionName, (err, records) => {
-            if (err) callback(err);
-            else {
-                let result = records[id];
-
-                if (!result)
-                    callback(new Exception.ResourceNotFoundException("id = \"" + id + "\""));
-                else
-                    callback(err, result);
-            }
-        });
-    }
+	async getById(id) {
+		try {
+			const records = await this.adapter.fetchCollection(this.gamesCollectionName);
+			if (!records[id]) throw new Exception.ResourceNotFoundException("id = \"" + id + "\"")
+			return Promise.resolve(records[id]);
+		} catch (e) {
+			return Promise.reject(e);
+		}
+	}
 }
 
 module.exports = GameService;
