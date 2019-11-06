@@ -14,15 +14,6 @@ class FileSystem {
 		} catch (e) {
 			return Promise.reject(e);
 		}
-
-		// fs.readFile(this.dataDirectory + collectionName + ".json", (err, file) => {
-		//     if (err) callback(err);
-		//     else {
-		//         let body = new Buffer(file).toString();
-		//         let collectionObject = JSON.parse(body); // Stored in .json file, should keep it correct for this imp.
-		//         callback(null, collectionObject);
-		//     }
-		// });
 	}
 }
 
