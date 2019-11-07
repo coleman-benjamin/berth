@@ -16,126 +16,105 @@ class SyncDataPlugin {
             filename : [String]     // Name of file containing data
             metaPath : [String]     // Path to module meta file (required)
      */
-    constructor(options) {
-        this.options = options;
-        this.errorMsgBase = "SyncDataPlugin error : ";
-    }
+	constructor(options) {
+		this.options = options;
+		this.errorMsgBase = "SyncDataPlugin error : ";
+	}
 
-    getInvalidOptions() {
-        if (!this.options)
-            return "Missing options.";
-        if (!this.options.mode || (this.options.mode !== "development" && this.options.mode !== "production"))
-            return "Missing or invalid option : mode. Required, values should be \"development\" or \"production\".";
-        if (!this.options.moduleName)
-            return "Missing option : moduleName";
-        if (!this.options.dataPath)
-            return "Missing option : dataPath";
-        if (!this.options.filename)
-            return "Missing option : filename";
-        if (!this.options.metaPath)
-            return "Missing option : metaPath";
-        if (!this.options.publicBuildDir)
-            return "Missing option : publicBuildDir";
-        return null;
-    }
+	getInvalidOptions() {
+		if (!this.options)
+			return "Missing options.";
+		if (!this.options.mode || (this.options.mode !== "development" && this.options.mode !== "production"))
+			return "Missing or invalid option : mode. Required, values should be \"development\" or \"production\".";
+		if (!this.options.moduleName)
+			return "Missing option : moduleName";
+		if (!this.options.dataPath)
+			return "Missing option : dataPath";
+		if (!this.options.dataFileName)
+			return "Missing option : filename";
+		if (!this.options.metaPath)
+			return "Missing option : metaPath";
+		if (!this.options.publicBuildDir)
+			return "Missing option : publicBuildDir";
+		return null;
+	}
 
-    checkFileExists(path) {
-        try {
-            fs.statSync(path);
-            return true;
-        } catch(e) {
-            return false;
-        }
-    }
+	checkFileExists(filepath) {
+		try {
+			fs.statSync(filepath);
+			return true;
+		} catch (e) {
+			return false;
+		}
+	}
 
-    getJsonFromFile(path) {
-        let file = fs.readFileSync(path, { encoding : "utf8" });
-        return JSON.parse(new Buffer(file).toString());
-    }
+	getJsonFromFile(filepath) {
+		try {
+			return JSON.parse(fs.readFileSync(filepath, "utf8"));
+		} catch (e) {
+			throw e;
+		}
+	}
 
-    createDataDirectory(path) {
-        fs.mkdirSync(path);
-    }
+	writeJsonObjectToFile(filepath, jsonObject) {
+		fs.writeFileSync(filepath, JSON.stringify(jsonObject, null, 2));
+	}
 
-    writeJsonObjectToFile(path, jsonObject) {
-        fs.writeFileSync(path, JSON.stringify(jsonObject, null, 2));
-    }
-
-    apply(compiler) {
+	apply(compiler) {
         /*
             Validate
          */
-        let invalidOptions = this.getInvalidOptions();
-        if (invalidOptions) {
-            console.log(this.errorMsgBase + invalidOptions);
-            return;
-        }
-        if (!this.checkFileExists(this.options.metaPath)) {
-            console.log(this.errorMsgBase + "Missing module meta file. Configured path : " + this.options.metaPath);
-            return;
-        }
+		const invalidOptions = this.getInvalidOptions();
+		if (invalidOptions) {
+			console.log(`${this.errorMsgBase}${invalidOptions}`);
+			return;
+		}
+
+		// Game meta file required
+		if (!this.checkFileExists(this.options.metaPath)) {
+			console.log(`${this.errorMsgBase}Missing module meta file. Configured path : ${this.options.metaPath}`);
+			return;
+		}
 
         /*
             Create hook
          */
-        const ctx = this;
+		compiler.hooks.done.tap("SyncDataPlugin", (stats) => {
+			console.log("--------------------------");
+			console.log("SyncDataPlugin :::: syncing...");
 
-        compiler.hooks.done.tap("SyncDataPlugin", (stats) => {
-            console.log("--------------------------");
-            console.log("SyncDataPlugin :::: syncing...");
+			const filename = `${this.options.dataPath}${this.options.dataFileName}`;
 
-            /*
-                Scripts field name for created record
-             */
-            const scriptsField = "scripts";
+			// Get game meta information from meta.json
+			const gameMeat = this.getJsonFromFile(this.options.metaPath);
 
-            /*
-                Environment config
-             */
-            const publicBuildDir = this.options.publicBuildDir.replace("[module_name]", this.options.moduleName);
+			// Get data file if exists
+			let database = {};
+			try {
+				database = this.getJsonFromFile(filename)
+			} catch (e) { }
 
-            /*
-                Get module meta object
-             */
-            const meta = ctx.getJsonFromFile(this.options.metaPath);
+			// Make data directory if no data, fail if no make
+			if (Object.keys(database).length === 0) fs.mkdirSync(this.options.dataPath);
 
-            /*
-                Get data file if exists, or empty object if not
-             */
-            let data = {};
-            if (ctx.checkFileExists(this.options.dataPath + this.options.filename)) {
-                data = ctx.getJsonFromFile(this.options.dataPath + this.options.filename);
-            } else {
-                ctx.createDataDirectory(this.options.dataPath);
-            }
+			// Add game scripts
+			gameMeat["scripts"] = Object.keys(stats.compilation.assets)
+				.filter(script => /\b.js\b/.test(script))
+				.map(script => `${this.options.publicBuildDir}${script}`);
 
-            /*
-                Add information to meta file and assign it to data object
-             */
+			// Add mode
+			gameMeat["buildMode"] = this.options.mode;
 
-            // Fill public build path for each script (JS only)
-            let scripts = Object.keys(stats.compilation.assets);
-            let compiledScripts = [];
-            for (let x = 0; x < scripts.length; x++) {
-                if (/\b.js\b/.test(scripts[x])) {
-                    compiledScripts.push(publicBuildDir + scripts[x]);
-                }
-            }
-            meta[scriptsField] = compiledScripts;
+			// Update database record
+			database[this.options.moduleName] = gameMeat;
 
-            // Add which version is being built, for sorting if ever
-            meta.buildType = this.options.mode === "development" ? "dev" : "build";
+			// Write it, fail if no write
+			this.writeJsonObjectToFile(filename, database); // Fail if no write
 
-            /*
-                Assign meta to data object and write to file
-             */
-            data[this.options.moduleName] = meta;
-            ctx.writeJsonObjectToFile(this.options.dataPath + this.options.filename, data);
-
-            console.log("SyncDataPlugin :::: finished writing data to " + this.options.dataPath + this.options.filename);
-            console.log("--------------------------");
-        })
-    }
+			console.log(`SyncDataPlugin :::: finished writing data to ${filename}`);
+			console.log("--------------------------");
+		})
+	}
 }
 
 module.exports = SyncDataPlugin;

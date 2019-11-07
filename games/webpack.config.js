@@ -1,102 +1,95 @@
-const webpack = require('webpack');
-const path = require('path');
 const fs = require('fs');
+const path = require('path');
+const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const SyncDataPlugin = require("./SyncDataPlugin");
 
 module.exports = function (env, argv) {
     /*
-        Validate arguments
+        Args / Webpack flags
      */
-    if (!argv.game) {
-        let msg = "Error : Pass in module name, e.g. npm run game -- --game=myGame";
-        console.log(msg);
-        process.exit(1);
-    }
-    if (!argv.mode && (argv.mode === "development" || argv.mode === "production")) {
-        let msg = "Error : Pass in mode, development or production. Use npm [game or dev-game] --game=myGame";
-        console.log(msg);
-        process.exit(1);
-    }
-    const moduleName = argv.game;
-    const mode = argv.mode;
+	if (!argv.game) {
+		console.log("Error : Pass in module name, e.g. npm run game -- --game=myGame");
+		process.exit(1);
+	}
 
-    /*
-        Get build config
-     */
-    const __config__ = (mode === "production") ? require("./build.config") : require("./build.config.dev");
+	argv.mode = argv.dev ? "development" : "production";
+
+	const moduleName = argv.game;
+	const mode = argv.mode;
+	const watch = argv.watch ? true : false;
+	const minimize = mode === "production"
+	const stats = { warnings: mode === "production" }
 
     /*
         Declarations
      */
-    const inputPath = path.resolve(__dirname, __config__.inputRoot + moduleName);
-    const outputPath = path.resolve(__dirname, __config__.outputRoot + moduleName);
-    const publicPath = './';
-    const entryConfig = {};
-    const outputConfig = {};
-    const pluginsConfig = [];
+	const inputPath = path.resolve(__dirname, `./module/${moduleName}`);
+	const outputPath = path.resolve(__dirname, `../server/public/js/games/${moduleName}`);
+
+	const publicBuildDir = `/js/games/${moduleName}/`;
+	const publicPath = './';
+
+	const dataPath = path.resolve(__dirname, "../server/data");
+	const dataFileName = "/games.json";
+
+	const buildRoot = "/js/games";
+	const assetsPath = `${inputPath}/assets`;
+	const metaPath = `${inputPath}/meta.json`;
+
+	const entry = {};
+	const output = {};
+	const plugins = [];
 
     /*
         Entry Config
     */
-    entryConfig[moduleName] = inputPath + "/main.js";
-    entryConfig["vendor"] = ['phaser'];
+	entry[moduleName] = `${inputPath}/main.js`;
+	entry["vendor"] = ['phaser'];
 
     /*
         Output Config
      */
-    outputConfig["pathinfo"] = true;
-    outputConfig["path"] = outputPath;
-    outputConfig["publicPath"] = publicPath;
-    outputConfig["library"] = '[name]';
-    outputConfig["libraryTarget"] = 'umd';
-    outputConfig["filename"] = '[name].bundle.js';
+	output["pathinfo"] = true;
+	output["path"] = outputPath;
+	output["publicPath"] = publicPath;
+	output["library"] = '[name]';
+	output["libraryTarget"] = 'umd';
+	output["filename"] = '[name].bundle.js';
 
     /*
-        Plugins : From config
+        Ignore Plugins (frankly I forget why)
     */
-    if (__config__.plugins)
-        pluginsConfig.push.apply(__config__.plugins);
+	if (mode === "production") {
+		plugins.push.apply(new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/));
+	}
 
     /*
         Plugin : Phaser 3
     */
-    pluginsConfig.push(new webpack.DefinePlugin({
-        __DEV__: JSON.stringify(JSON.parse(process.env.BUILD_DEV || __config__.env.buildDev)),
-        WEBGL_RENDERER: true,
-        CANVAS_RENDERER: true
-    }));
+	plugins.push(new webpack.DefinePlugin({
+		__DEV__: mode === "development",
+		WEBGL_RENDERER: true,
+		CANVAS_RENDERER: true
+	}));
 
     /*
         Plugin : SyncDataPlugin
         Responsible for writing game meta data to storage
      */
-    pluginsConfig.push(new SyncDataPlugin({
-        moduleName: moduleName,
-        mode: __config__.env.mode,
-        publicBuildDir: __config__.syncDataConfig.publicBuildDir,
-        dataPath: path.resolve(__dirname, __config__.syncDataConfig.dataPath),
-        filename: __config__.syncDataConfig.filename,
-        metaPath: path.resolve(__dirname, inputPath + "/meta.json")
-    }));
+	plugins.push(new SyncDataPlugin({ mode, moduleName, publicBuildDir, dataPath, dataFileName, metaPath }));
 
     /*
         Plugin : CopyWebpackPlugin
         Used when the project has assets (will probably elaborate)
      */
-    const assetsPath = path.resolve(__dirname, "./module/" + moduleName + "/assets");
 
-    let hasAssets = false;
-    try {
-        fs.statSync(path.resolve(__dirname, assetsPath)); // throw error if doesn't exist
-        hasAssets = true;
-    } catch (e) { }
+	if (fs.readdirSync(inputPath).includes("assets")) {
 
-    if (hasAssets) {
-        pluginsConfig.push(new CopyWebpackPlugin([{
-            from: assetsPath,
-            to: 'assets'
-        }]));
+		plugins.push(new CopyWebpackPlugin([{
+			from: assetsPath,
+			to: 'assets'
+		}]));
 
         /*
             When loading assets in the game, set the load path with the BUILD_ROOT environment variable
@@ -104,45 +97,44 @@ module.exports = function (env, argv) {
 
             e.g. : this.load.path = process.env.ASSETS_PATH;
          */
-        pluginsConfig.push(new webpack.DefinePlugin({ 'process.env.BUILD_ROOT': "'" + __config__.buildRoot + "'" }));
-        pluginsConfig.push(new webpack.DefinePlugin({ 'process.env.ASSETS_PATH': "'" + __config__.syncDataConfig.publicBuildDir.replace("[module_name]", moduleName) + "assets/'" })); // TODO: Refactor the f out of this
-    }
+		plugins.push(new webpack.DefinePlugin({ 'process.env.BUILD_ROOT': `'${buildRoot}'` }));
+		plugins.push(new webpack.DefinePlugin({ 'process.env.ASSETS_PATH': `'${publicBuildDir}assets/'` }));
+	}
 
     /*
         Log info
     */
-    console.log("--------------------------");
-    console.log("Mode : " + mode);
-    console.log("Module name : " + moduleName);
-    console.log("Entry config : " + JSON.stringify(entryConfig, null, 2));
-    console.log("Output path : " + outputConfig.path);
-    console.log("--------------------------");
+	console.log("--------------------------");
+	console.log(`Module name : ${moduleName}`);
+	console.log(`Input path : ${inputPath}`);
+	console.log(`Output path : ${outputPath}`);
+	console.log("--------------------------");
 
-    return {
-        entry: entryConfig,
-        output: outputConfig,
-        watch: __config__.watch,
-        stats: __config__.stats,
-        plugins: pluginsConfig,
-        optimization: {
-            minimize: __config__.minimize,
-            splitChunks: {
-                cacheGroups: {
-                    vendor: {
-                        chunks: 'all',
-                        name: 'vendor',
-                        test: /[\\/]node_modules[\\/]/,
-                        enforce: true
-                    },
-                }
-            }
-        },
-        module: {
-            rules: [
-                { test: /\.js$/, use: ['babel-loader'], include: path.join(__dirname, 'src') },
-                { test: /phaser-split\.js$/, use: ['expose-loader?Phaser'] },
-                { test: [/\.vert$/, /\.frag$/], use: 'raw-loader' }
-            ]
-        },
-    };
+	return {
+		entry,
+		output,
+		watch,
+		stats,
+		plugins,
+		optimization: {
+			minimize,
+			splitChunks: {
+				cacheGroups: {
+					vendor: {
+						chunks: 'all',
+						name: 'vendor',
+						test: /[\\/]node_modules[\\/]/,
+						enforce: true
+					},
+				}
+			}
+		},
+		module: {
+			rules: [
+				{ test: /\.js$/, use: ['babel-loader'], include: path.join(__dirname, 'src') },
+				{ test: /phaser-split\.js$/, use: ['expose-loader?Phaser'] },
+				{ test: [/\.vert$/, /\.frag$/], use: 'raw-loader' }
+			]
+		},
+	};
 };
