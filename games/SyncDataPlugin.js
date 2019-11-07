@@ -1,8 +1,7 @@
 /*
     SyncDataPlugin
 
-    The purpose of this plugin is to write the compilation information to a local file,
-    which the server will use to present the compiled modules.
+    Takes the meta.json info and adds output scripts and other info for serving
  */
 
 const fs = require("fs");
@@ -13,7 +12,7 @@ class SyncDataPlugin {
             moduleName : [String],  // Module name (required)
             mode : [String],        // Compile mode (required)
             dataPath : [String]     // Path to data folder (required)
-            filename : [String]     // Name of file containing data
+            dataFileName : [String]     // Name of file containing data
             metaPath : [String]     // Path to module meta file (required)
      */
 	constructor(options) {
@@ -39,24 +38,11 @@ class SyncDataPlugin {
 		return null;
 	}
 
-	checkFileExists(filepath) {
-		try {
-			fs.statSync(filepath);
-			return true;
-		} catch (e) {
-			return false;
-		}
+	fetchData(filepath) {
+		return JSON.parse(fs.readFileSync(filepath, "utf8"));
 	}
 
-	getJsonFromFile(filepath) {
-		try {
-			return JSON.parse(fs.readFileSync(filepath, "utf8"));
-		} catch (e) {
-			throw e;
-		}
-	}
-
-	writeJsonObjectToFile(filepath, jsonObject) {
+	writeData(filepath, jsonObject) {
 		fs.writeFileSync(filepath, JSON.stringify(jsonObject, null, 2));
 	}
 
@@ -71,7 +57,9 @@ class SyncDataPlugin {
 		}
 
 		// Game meta file required
-		if (!this.checkFileExists(this.options.metaPath)) {
+		try {
+			fs.statSync(filepath);
+		} catch (e) {
 			console.log(`${this.errorMsgBase}Missing module meta file. Configured path : ${this.options.metaPath}`);
 			return;
 		}
@@ -86,30 +74,30 @@ class SyncDataPlugin {
 			const filename = `${this.options.dataPath}${this.options.dataFileName}`;
 
 			// Get game meta information from meta.json
-			const gameMeat = this.getJsonFromFile(this.options.metaPath);
+			const gameMeat = this.fetchData(this.options.metaPath);
 
 			// Get data file if exists
 			let database = {};
 			try {
-				database = this.getJsonFromFile(filename)
+				database = this.fetchData(filename)
 			} catch (e) { }
 
 			// Make data directory if no data, fail if no make
 			if (Object.keys(database).length === 0) fs.mkdirSync(this.options.dataPath);
 
 			// Add game scripts
-			gameMeat["scripts"] = Object.keys(stats.compilation.assets)
-				.filter(script => /\b.js\b/.test(script))
-				.map(script => `${this.options.publicBuildDir}${script}`);
+			gameMeat["scripts"] = Object.keys(stats.compilation.assets) // List of compiled assets
+				.filter(script => /\b.js\b/.test(script)) // Take only .js files
+				.map(script => `${this.options.publicBuildDir}${script}`); // Add script path to scripts field
 
 			// Add mode
-			gameMeat["buildMode"] = this.options.mode;
+			gameMeat["build_mode"] = this.options.mode;
 
 			// Update database record
 			database[this.options.moduleName] = gameMeat;
 
 			// Write it, fail if no write
-			this.writeJsonObjectToFile(filename, database); // Fail if no write
+			this.writeData(filename, database); // Fail if no write
 
 			console.log(`SyncDataPlugin :::: finished writing data to ${filename}`);
 			console.log("--------------------------");
