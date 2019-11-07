@@ -58,7 +58,7 @@ class SyncDataPlugin {
 
 		// Game meta file required
 		try {
-			fs.statSync(filepath);
+			fs.statSync(this.options.metaPath);
 		} catch (e) {
 			console.log(`${this.errorMsgBase}Missing module meta file. Configured path : ${this.options.metaPath}`);
 			return;
