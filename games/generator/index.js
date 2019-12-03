@@ -3,7 +3,7 @@ const path = require("path");
 const prompt = require("prompt");
 const moment = require("moment");
 
-const MODULE_PATH = path.resolve(__dirname, "../module") + "/";
+const MODULE_PATH = path.resolve(__dirname, "../module");
 const TEMPLATE_PATH = path.resolve(__dirname, "template.js");
 const TEMPLATE_SEPARATOR = ";;;\n";
 const FILENAMES = {
@@ -27,16 +27,13 @@ prompt.start();
 prompt.get(inputSchema, createGameBase);
 
 async function createGameBase(err, input) {
-	if (err) {
-		console.log(err);
-		return;
-	}
+	if (err) return; // ctrl+c
 
 	console.log("Creating base for " + input.name);
 
 	// Configure name for game directory
 	const game_id = input.name.toLowerCase().replace(/ /, "_");
-	const game_dir = path.normalize(MODULE_PATH + game_id + "/");
+	const game_dir = path.normalize(`${MODULE_PATH}/${game_id}`);
 
 	// Content for meta file, prettify for write
 	const meta = JSON.stringify({
@@ -54,9 +51,9 @@ async function createGameBase(err, input) {
 		const template = body.split(TEMPLATE_SEPARATOR)
 
 		// File write operations
-		await fs.writeFile(game_dir + FILENAMES.MAIN, template[0]);
-		await fs.writeFile(game_dir + FILENAMES.START_SCENE, template[1]);
-		await fs.writeFile(game_dir + FILENAMES.META, meta);
+		await fs.writeFile(`${game_dir}/${FILENAMES.MAIN}`, template[0]);
+		await fs.writeFile(`${game_dir}/${FILENAMES.START_SCENE}`, template[1]);
+		await fs.writeFile(`${game_dir}/${FILENAMES.META}`, meta);
 
 		console.log(`Wrote template files to ${game_dir}`)
 	} catch (e) {
