@@ -59,7 +59,7 @@ npm run client
 
 #### Development packaging
 
-Prefix with `dev-`, e.g. `npm run dev-client` to create unminified packages for development purposes.
+Add `--dev` to either `npm run game` or `npm run client`, e.g. `npm run game -- --game=example --dev` or `npm run client -- --dev`
 
 #### Serve
 ```
