@@ -58,7 +58,7 @@ module.exports = function (env, argv) {
 	output["filename"] = '[name].bundle.js';
 
     /*
-        Ignore Plugins (frankly I forget why)
+        Ignore Plugins
     */
 	if (mode === "production") {
 		plugins.push.apply(new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/));
