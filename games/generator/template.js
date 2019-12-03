@@ -1,5 +1,5 @@
 // Loader loads
-import { Loader } from "../../src/loader";
+import { Loader } from "@/loader";
 
 // Add Scenes
 import { StartScene } from './start_scene';

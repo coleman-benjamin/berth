@@ -6,9 +6,8 @@
 	"main": "index.js",
 	"scripts": {
 		"serve": "node ./server/server.js",
-		"game": "webpack --mode=production --config ./games/webpack.config.js",
+		"game": "webpack --config ./games/webpack.config.js",
 		"client": "webpack --mode=production --config ./client/webpack.config.js",
-		"dev-game": "webpack  --mode=development --config ./games/webpack.config.js",
 		"dev-client": "webpack --mode=development --config ./client/webpack.config.js",
 		"gen": "node ./games/generator/index.js"
 	},

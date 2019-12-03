@@ -24,7 +24,7 @@ module.exports = function (env, argv) {
     /*
         Declarations
      */
-	const inputPath = path.resolve(__dirname, `./module/${moduleName}`);
+	const inputPath = path.resolve(__dirname, `./src/module/${moduleName}`);
 	const outputPath = path.resolve(__dirname, `../server/public/js/games/${moduleName}`);
 
 	const publicBuildDir = `/js/games/${moduleName}/`;
@@ -135,6 +135,11 @@ module.exports = function (env, argv) {
 				{ test: /phaser-split\.js$/, use: ['expose-loader?Phaser'] },
 				{ test: [/\.vert$/, /\.frag$/], use: 'raw-loader' }
 			]
+		},
+		resolve: {
+			alias: {
+				'@': path.resolve(__dirname, './src')
+			},
 		},
 	};
 };

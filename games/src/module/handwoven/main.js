@@ -1,4 +1,4 @@
-import {Loader} from "../Loader";
+import { Loader } from "@/loader";
 
 import StartScene from './StartScene';
 import EndScene from './EndScene';

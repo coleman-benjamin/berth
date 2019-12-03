@@ -1,4 +1,4 @@
-import {Loader} from "../../src/Loader";
+import { Loader } from "@/loader";
 
 import StartScene from './start_scene';
 
