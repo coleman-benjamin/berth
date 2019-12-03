@@ -37,25 +37,27 @@ module.exports = function (env, argv) {
 	const assetsPath = `${inputPath}/assets`;
 	const metaPath = `${inputPath}/meta.json`;
 
-	const entry = {};
-	const output = {};
 	const plugins = [];
 
     /*
         Entry Config
     */
-	entry[moduleName] = `${inputPath}/main.js`;
-	entry["vendor"] = ['phaser'];
+	const entry = {
+		vendor: ['phaser'],
+		[moduleName]: `${inputPath}/main.js`
+	}
 
     /*
         Output Config
      */
-	output["pathinfo"] = true;
-	output["path"] = outputPath;
-	output["publicPath"] = publicPath;
-	output["library"] = '[name]';
-	output["libraryTarget"] = 'umd';
-	output["filename"] = '[name].bundle.js';
+	const output = {
+		publicPath,
+		pathinfo: true,
+		path: outputPath,
+		library: "[name]",
+		libraryTarget: "umd",
+		filename: "[name].bundle.js"
+	}
 
     /*
         Ignore Plugins

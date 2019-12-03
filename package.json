@@ -7,8 +7,7 @@
 	"scripts": {
 		"serve": "node ./server/server.js",
 		"game": "webpack --config ./games/webpack.config.js",
-		"client": "webpack --mode=production --config ./client/webpack.config.js",
-		"dev-client": "webpack --mode=development --config ./client/webpack.config.js",
+		"client": "webpack --config ./client/webpack.config.js",
 		"gen": "node ./games/generator/index.js"
 	},
 	"license": "MIT",
