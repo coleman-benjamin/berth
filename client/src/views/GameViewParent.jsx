@@ -16,8 +16,10 @@ class GameViewParent extends React.Component {
 	}
 
 	componentDidMount() {
+		apiService.getGame(this.props.match.params.id).then(game => this.setState({ game }))
+			.catch(e => this.setState({ e }));
+
 		window.addEventListener("message", this.handleFrameMessage.bind(this));
-		apiService.getGame(this.props.match.params.id).then(response => this.setState({ game: response.data }));
 	}
 
 	componentWillUnmount() {
@@ -44,6 +46,7 @@ class GameViewParent extends React.Component {
 	}
 
 	render() {
+		if (this.state.e) throw this.state.e;
 		return (
 			<div>
 				<GameView game={this.state.game} ref={(r) => this.gameViewRef = r} />

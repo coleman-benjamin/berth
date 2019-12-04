@@ -14,7 +14,7 @@ class GamesIndexView extends React.Component {
 	}
 
 	componentDidMount() {
-		apiService.getGames().then(response => this.setState({ games: response.data }));
+		apiService.getGames().then(games => this.setState({ games }));
 	}
 
 	render() {
