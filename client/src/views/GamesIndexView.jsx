@@ -14,10 +14,12 @@ class GamesIndexView extends React.Component {
 	}
 
 	componentDidMount() {
-		apiService.getGames().then(games => this.setState({ games }));
+		apiService.getGames().then(games => this.setState({ games }))
+			.catch(e => this.setState({ e }));
 	}
 
 	render() {
+		if (this.state.e) throw this.state.e;
 		return (
 			<div>
 				<GameListView games={this.state.games} />
