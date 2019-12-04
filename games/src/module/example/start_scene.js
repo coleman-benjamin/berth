@@ -27,15 +27,8 @@ class StartScene extends BaseScene {
 		];
 
 		// Listen for the last Scapula to say "done"
-		// this.scapulaGroup[this.scapulaGroup.length - 1].emitter.on('done', this.onFinish.bind(this));
 		this.scapulaGroup[0].emitter.on('done', () => {
-			this.endScene(true);
-			// this.time.delayedCall({
-			//     delay: 2000,
-			//     callback: () => { 
-			//         this.endScene(true);
-			//     }
-			// })
+			setTimeout(() => { this.endScene(true) }, 1000)
 		}, this);
 	}
 
@@ -43,15 +36,6 @@ class StartScene extends BaseScene {
 		for (const scapula of this.scapulaGroup) {
 			scapula.update();
 		}
-	}
-
-	// End after delay
-	onFinish() {
-		console.log(this);
-		this.time.delayedCall({
-			delay: 2000,
-			callback: this.endScene.bind(this, true)
-		})
 	}
 }
 
