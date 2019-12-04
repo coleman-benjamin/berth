@@ -1,4 +1,4 @@
-const GameService = require(__src + "/service/GameService");
+const GameService = require("../service/GameService");
 
 const gameService = new GameService();
 
@@ -7,8 +7,8 @@ class GameController extends require("./Controller") {
 		super();
 		this.prefix = "/api/games";
 		this.routes = [
-			{ path: "/", method: this.METHOD.GET, handler: this.index },
-			{ path: "/:id", method: this.METHOD.GET, handler: this.show },
+			{ path: "/", method: "get", handler: this.index },
+			{ path: "/:id", method: "get", handler: this.show },
 		];
 	}
 

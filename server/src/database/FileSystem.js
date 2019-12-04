@@ -8,7 +8,7 @@ class FileSystem {
 
 	async fetchCollection(collectionName) {
 		try {
-			const body = await fs.readFile(this.dataDirectory + collectionName + ".json", "utf8");
+			const body = await fs.readFile(`${this.dataDirectory}/${collectionName}.json`, "utf8");
 			const collectionObject = JSON.parse(body);
 			return Promise.resolve(collectionObject);
 		} catch (e) {

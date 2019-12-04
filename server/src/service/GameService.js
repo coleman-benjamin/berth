@@ -1,9 +1,10 @@
-const FileSystem = require(__src + "/database/FileSystem");
-const Exception = require(__src + "/exception/Exception");
+const path = require("path");
+const FileSystem = require("../database/FileSystem");
+const { ResourceNotFoundException } = require("../exception");
 
 class GameService {
 	constructor() {
-		this.adapter = new FileSystem(__root + "/data/");
+		this.adapter = new FileSystem(path.resolve(__dirname, "../../data"));
 		this.gamesCollectionName = "games";
 	}
 
@@ -19,7 +20,7 @@ class GameService {
 	async getById(id) {
 		try {
 			const records = await this.adapter.fetchCollection(this.gamesCollectionName);
-			if (!records[id]) throw new Exception.ResourceNotFoundException("id = \"" + id + "\"")
+			if (!records[id]) throw new ResourceNotFoundException();
 			return Promise.resolve(records[id]);
 		} catch (e) {
 			return Promise.reject(e);
