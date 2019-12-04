@@ -9,7 +9,7 @@ class GameView extends React.Component {
 		return false;
 	}
 
-	componentDidUpdate(nextProps) {
+	componentWillReceiveProps(nextProps) {
 		if (this.props !== nextProps) {
 			this.props = nextProps;
 
