@@ -5,7 +5,7 @@
 	"author": "Benjamin Coleman",
 	"main": "index.js",
 	"scripts": {
-		"serve": "node ./server/server.js",
+		"serve": "node ./server/index.js",
 		"game": "webpack --config ./games/webpack.config.js",
 		"client": "webpack --config ./client/webpack.config.js",
 		"gen": "node ./games/generator/index.js"
@@ -38,6 +38,7 @@
 		"body-parser": "^1.19.0",
 		"cookie-parser": "^1.4.4",
 		"dat.gui": "^0.7.6",
+		"dotenv": "^8.2.0",
 		"express": "^4.17.1",
 		"fs-extra": "^7.0.1",
 		"moment": "^2.24.0",

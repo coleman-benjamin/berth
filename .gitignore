@@ -2,6 +2,7 @@ node_modules/
 .idea
 *.iml
 
+.env
 server/public/js/games/*
 server/public/js/client.bundle.js
 server/data/*
