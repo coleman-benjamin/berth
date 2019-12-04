@@ -3,23 +3,24 @@ import BackButton from "@/buttons/BackButton.jsx";
 import ApiService from "@/services/ApiService";
 import GameListView from "@/views/GameListView.jsx";
 
+const apiService = new ApiService();
+
 class GamesIndexView extends React.Component {
 	constructor() {
 		super();
-		this.apiService = new ApiService();
 		this.state = {
-			lines: []
+			games: []
 		}
 	}
 
 	componentDidMount() {
-		this.apiService.getGames(response => this.setState({ lines: response.data }))
+		apiService.getGames().then(response => this.setState({ games: response.data }));
 	}
 
 	render() {
 		return (
 			<div>
-				<GameListView games={this.state.lines} />
+				<GameListView games={this.state.games} />
 				<BackButton href="/" />
 			</div>
 		);

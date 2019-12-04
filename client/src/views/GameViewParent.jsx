@@ -4,19 +4,20 @@ import ReplayButton from "@/buttons/ReplayButton.jsx";
 import ApiService from "@/services/ApiService";
 import GameView from "@/views/GameView.jsx";
 
+const apiService = new ApiService();
+
 class GameViewParent extends React.Component {
 	constructor(props) {
 		super(props);
-		this.apiService = new ApiService();
 		this.state = {
-			line: {},
+			game: {},
 			replayStyle: { "display": "none" }
 		}
 	}
 
 	componentDidMount() {
-		this.apiService.getGame(this.props.match.params.id, (response) => this.setState({ line: response.data }));
 		window.addEventListener("message", this.handleFrameMessage.bind(this));
+		apiService.getGame(this.props.match.params.id).then(response => this.setState({ game: response.data }));
 	}
 
 	componentWillUnmount() {
@@ -45,7 +46,7 @@ class GameViewParent extends React.Component {
 	render() {
 		return (
 			<div>
-				<GameView game={this.state.line} ref={(r) => this.gameViewRef = r} />
+				<GameView game={this.state.game} ref={(r) => this.gameViewRef = r} />
 				<BackButton href="/games" />
 				<ReplayButton style={this.state.replayStyle} onClick={this.onReplayClick.bind(this)} />
 			</div>
