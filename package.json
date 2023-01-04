@@ -26,7 +26,7 @@
 		"eslint-plugin-import": "^2.18.2",
 		"expose-loader": "^0.7.5",
 		"glob": "^7.1.6",
-		"html-webpack-plugin": "^3.2.0",
+		"html-webpack-plugin": "^5.5.0",
 		"prompt": "^1.0.0",
 		"raw-loader": "^0.5.1",
 		"webpack": "^4.41.2",
